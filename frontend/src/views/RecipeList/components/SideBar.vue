@@ -1,7 +1,7 @@
 <template>
     <div class="side-bar">
         SideBar
-        
+        <v-checkbox></v-checkbox>
     </div>
 </template>
 <script>
