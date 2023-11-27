@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'hidden': scrolledDown, 'fixed': shouldFixNavbar }" class="navbar">
+    <div class="navbar">
         <div><h1>RECI-BEE</h1></div>
         <ul>
             <li><a href="#">Browse Catalogue</a></li>
@@ -14,39 +14,12 @@
 <script>
 export default {
     name: 'NavBar',
-  data() {
-    return {
-      scrolledDown: false,
-      lastScrollY: 0,
-      scrollThreshold: 250,
-    };
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
-  computed: {
-    shouldFixNavbar() {
-        
-      return !this.scrolledDown && window.scrollY > this.scrollThreshold;
-    },
-  },
-  methods: {
-    handleScroll() {
-      const scrolledDown = window.scrollY > this.lastScrollY && window.scrollY > 116;
-      this.scrolledDown = scrolledDown;
-      this.lastScrollY = window.scrollY;
-    },
-  },
-};
+}
 </script>
 
 
 <style scoped>
 .navbar {
-    transition: transform 0.5s ease-in-out;
     background-color: #FBF7EB;
     height: 116px;
     display: flex;
@@ -78,14 +51,5 @@ li {
 a {
     text-decoration: none;
     color : #312525;
-}
-.hidden {
-  transform: translateY(-100%);
-}
-.fixed {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
 }
 </style>
