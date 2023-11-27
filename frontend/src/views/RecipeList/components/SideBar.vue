@@ -2,49 +2,66 @@
     <div class="side-bar">
         <div class="top">
             <h2>Filters</h2>
-            <button>Clear All</button>
+            <button @click="clearAll">Clear All</button>
         </div>
         <hr id="bolder">
         <ul>
             <li>
                 <h3>Ratings</h3>
                 <hr>
-                <v-rating id="stars" hover clearable size="27.2"></v-rating>
+                <v-rating v-model="rating" id="stars" hover clearable size="27.2"></v-rating>
             </li>
             <li>
                 <h3>Categories</h3>
                 <hr>
                 <div class="lol">
-                    <v-checkbox hide-details class="labels" label="Breakfast" value="Breakfast"></v-checkbox>
-                    <v-checkbox hide-details class="labels" label="Lunch" value="Lunch"></v-checkbox>
-                    <v-checkbox hide-details class="labels" label="Dinner" value="Dinner"></v-checkbox>
-                    <v-checkbox hide-details class="labels" label="Snacks" value="Snacks"></v-checkbox>
-                    <v-checkbox hide-details class="labels" label="Dessert" value="Dessert"></v-checkbox>
-                    <v-checkbox hide-details class="labels" label="Vegan" value="Vegan"></v-checkbox>
+                    <v-checkbox v-model="categories" hide-details class="labels" label="Breakfast" value="Breakfast"></v-checkbox>
+                    <v-checkbox v-model="categories" hide-details class="labels" label="Lunch" value="Lunch"></v-checkbox>
+                    <v-checkbox v-model="categories" hide-details class="labels" label="Dinner" value="Dinner"></v-checkbox>
+                    <v-checkbox v-model="categories" hide-details class="labels" label="Snacks" value="Snacks"></v-checkbox>
+                    <v-checkbox v-model="categories" hide-details class="labels" label="Dessert" value="Dessert"></v-checkbox>
+                    <v-checkbox v-model="categories" hide-details class="labels" label="Vegan" value="Vegan"></v-checkbox>
                 </div>
             </li>
             <li>
                 <h3>Time</h3>
                 <hr>
                 <div class="lol">
-                    <v-checkbox hide-details class="labels" label="5 - 10 Mins" value="5 - 10 Mins"></v-checkbox>
-                    <v-checkbox hide-details class="labels" label="10 - 30 Mins" value="10 - 30 Mins"></v-checkbox>
-                    <v-checkbox hide-details class="labels" label="30 - 60 Mins" value="30 - 60 Mins"></v-checkbox>
-                    <v-checkbox hide-details class="labels" label="+1 Hour" value="+1 Hour"></v-checkbox>
+                    <v-checkbox v-model="time" hide-details class="labels" label="5 - 10 Mins" value="5 - 10 Mins"></v-checkbox>
+                    <v-checkbox v-model="time" hide-details class="labels" label="10 - 30 Mins" value="10 - 30 Mins"></v-checkbox>
+                    <v-checkbox v-model="time" hide-details class="labels" label="30 - 60 Mins" value="30 - 60 Mins"></v-checkbox>
+                    <v-checkbox v-model="time" hide-details class="labels" label="+1 Hour" value="+1 Hour"></v-checkbox>
                 </div>
             </li>
             <li>
                 <h3>Liked</h3>
                 <hr>
                 <div class="lol">
-                    <v-checkbox hide-details class="labels" label="Show Liked Recipes" value="Liked"></v-checkbox>
+                    <v-checkbox v-model="liked" hide-details class="labels" label="Show Liked Recipes" value="Liked"></v-checkbox>
                 </div>
             </li>
         </ul>
     </div>
 </template>
 <script>
-
+export default {
+  data() {
+    return {
+      rating: 0,
+      categories: [],
+      time: [],
+      liked: false,
+    };
+  },
+  methods: {
+    clearAll() {
+      this.rating = 0;
+      this.categories = [];
+      this.time = [];
+      this.liked = false;
+    },
+  },
+};
 </script>
 
 <style scoped>
