@@ -1,6 +1,7 @@
 <template>
     <div class="side-bar">
         SideBar
+        
     </div>
 </template>
 <script>
@@ -12,5 +13,6 @@
         width: 200px;
         height: 100%;
         border: 3px solid rgb(31, 104, 152);
+        
     }
 </style>
