@@ -9,8 +9,8 @@
 
 <style scoped>
     .side-bar {
-        width: 200px;
-        height: 100%;
-        border: 3px solid rgb(31, 104, 152);
+        width: 360px;
+        height: 300%;
+        background-color: #E35733;
     }
 </style>
