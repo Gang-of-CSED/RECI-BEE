@@ -1,7 +1,7 @@
 <template>
-  
-  <div class="Card">
-    
+
+  <div class="Card" @click="redirectToCard">
+  <!-- <div class="Card"> -->
          <img v-if="cardData.isTheRandom" class="randomDish" :src="randomDishPath" />
     
      
@@ -24,7 +24,7 @@
 <script>
 export default {
   name: 'Card',
- props: {
+  props: {
     cardData: Object, 
   },
 
@@ -36,15 +36,27 @@ export default {
       randomDishPath:require('@/assets/randomDish.svg'),
       };
   } ,
+
   mounted(){
    this.imagePath = require(`@/assets/${this.cardData.imagePath}`);
   },
+
   methods: {
+
       toggleFavorite() {
-       
+        event.stopPropagation();
         this.$emit('toggle-favorite', this.cardData);
-    },
-    },   
+      },
+
+      redirectToCard() {
+      const cardUrl = `http://localhost:8080/${this.cardData.id}`;
+      window.location.href = cardUrl;
+      }
+      //  redirectToCard() {
+      //   // Use Vue Router to navigate to the Details component with the card's ID
+      //   this.$router.push({ name: 'Details', params: { id: this.cardData.id } });
+      // }
+  },   
 }
 </script>
 

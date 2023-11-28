@@ -12,12 +12,12 @@
 
 <script>
 
-import Card from './Card.vue'; // Import the Card component
+import Card from './Card.vue'; 
 
 export default {
   name: 'List.vue',
   components: {
-    Card, // Register the Card component
+    Card, 
   },
   data() {
     return {
@@ -28,9 +28,7 @@ export default {
 
     toggleFavorite(card) {
         const index = this.recipiesArray.indexOf(card);
-        console.log(card);
-        console.log(index);
-        // console.log(card.imagePath);
+      
         this.recipiesArray[index].isFavorited=!this.recipiesArray[index].isFavorited;
     }
 
@@ -62,7 +60,8 @@ export default {
 }
 .cards{
   margin: 12px;
-  flex: 0 0 calc(25% - 24px); 
+  /* flex: 0 0 calc(25% - 24px);  */
+  flex: 0 0 225; 
   box-sizing: border-box; 
  
 }
