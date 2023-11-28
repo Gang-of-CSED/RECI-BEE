@@ -10,7 +10,7 @@
 
 <style scoped>
     .side-bar {
-        width: 200px;
+        width: 300px;
         height: 100%;
         border: 3px solid rgb(31, 104, 152);
         
