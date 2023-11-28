@@ -48,14 +48,14 @@ export default {
         this.$emit('toggle-favorite', this.cardData);
       },
 
-      redirectToCard() {
-      const cardUrl = `http://localhost:8080/${this.cardData.id}`;
-      window.location.href = cardUrl;
-      }
-      //  redirectToCard() {
-      //   // Use Vue Router to navigate to the Details component with the card's ID
-      //   this.$router.push({ name: 'Details', params: { id: this.cardData.id } });
+      // redirectToCard() {
+      // const cardUrl = `http://localhost:8080/${this.cardData.id}`;
+      // window.location.href = cardUrl;
       // }
+       redirectToCard() {
+        // Use Vue Router to navigate to the Details component with the card's ID
+        this.$router.push({ name: 'recipe-detail', params: { id: this.cardData.id } });
+      }
   },   
 }
 </script>
