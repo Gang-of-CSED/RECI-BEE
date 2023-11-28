@@ -14,30 +14,30 @@
             <li>
                 <h3>Categories</h3>
                 <hr>
-                <div class="lol">
-                    <v-checkbox v-model="categories" hide-details class="labels" label="Breakfast" value="Breakfast"></v-checkbox>
-                    <v-checkbox v-model="categories" hide-details class="labels" label="Lunch" value="Lunch"></v-checkbox>
-                    <v-checkbox v-model="categories" hide-details class="labels" label="Dinner" value="Dinner"></v-checkbox>
-                    <v-checkbox v-model="categories" hide-details class="labels" label="Snacks" value="Snacks"></v-checkbox>
-                    <v-checkbox v-model="categories" hide-details class="labels" label="Dessert" value="Dessert"></v-checkbox>
-                    <v-checkbox v-model="categories" hide-details class="labels" label="Vegan" value="Vegan"></v-checkbox>
+                <div class="filter">
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Breakfast" value="Breakfast"></v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Lunch" value="Lunch"></v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Dinner" value="Dinner"></v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Snacks" value="Snacks"></v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Dessert" value="Dessert"></v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Vegan" value="Vegan"></v-checkbox>
                 </div>
             </li>
             <li>
                 <h3>Time</h3>
                 <hr>
-                <div class="lol">
-                    <v-checkbox v-model="time" hide-details class="labels" label="5 - 10 Mins" value="5 - 10 Mins"></v-checkbox>
-                    <v-checkbox v-model="time" hide-details class="labels" label="10 - 30 Mins" value="10 - 30 Mins"></v-checkbox>
-                    <v-checkbox v-model="time" hide-details class="labels" label="30 - 60 Mins" value="30 - 60 Mins"></v-checkbox>
-                    <v-checkbox v-model="time" hide-details class="labels" label="+1 Hour" value="+1 Hour"></v-checkbox>
+                <div class="filter">
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" label="5 - 10 Mins" value="5 - 10 Mins"></v-checkbox>
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" label="10 - 30 Mins" value="10 - 30 Mins"></v-checkbox>
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" label="30 - 60 Mins" value="30 - 60 Mins"></v-checkbox>
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" label="+1 Hour" value="+1 Hour"></v-checkbox>
                 </div>
             </li>
             <li>
                 <h3>Liked</h3>
                 <hr>
-                <div class="lol">
-                    <v-checkbox v-model="liked" hide-details class="labels" label="Show Liked Recipes" value="Liked"></v-checkbox>
+                <div class="filter">
+                    <v-checkbox density="compact" v-model="liked" hide-details class="labels" label="Show Liked Recipes" value="Liked"></v-checkbox>
                 </div>
             </li>
         </ul>
@@ -89,7 +89,9 @@ hr {
         display: flex;
         flex-direction: column;
         padding: 0 57px;
-        width: 360px;
+        flex-basis: 360px;
+        flex-grow: 0;
+        flex-shrink: 0;
         background-color: #E35733;
         color: #FBF7EB;
     }
@@ -117,7 +119,7 @@ hr {
         font-size: 16px;
         margin-bottom: 7px;
     }
-    .lol {
+    .filter {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
