@@ -23,7 +23,7 @@ import RecipeReview from './components/RecipeReview.vue';
   height: 100%;
 }
 .recipe-detail {
-  height: 100%;
+  height: auto;
 }
 
 </style>
