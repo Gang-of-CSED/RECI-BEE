@@ -42,7 +42,6 @@
 .recipe-info {
     width: 50%;
     height: 100%;
-    border: 3px solid rgb(0, 107, 128);
     background: #FBF7EB;
 ;
 }
