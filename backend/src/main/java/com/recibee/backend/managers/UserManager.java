@@ -29,15 +29,11 @@ public class UserManager {
         users.remove(username);
     }
 
-    public void updateUser(UserModel user) {
-        users.put(user.getUsername(), user);
-    }
-
     public Map<String, UserModel> getUsers() {
         return users;
     }
 
-    
+
 
 
 }
