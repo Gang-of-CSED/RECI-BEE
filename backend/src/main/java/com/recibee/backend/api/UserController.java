@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.recibee.backend.managers.UserManager;
 import com.recibee.backend.models.UserModel;
+import com.recibee.backend.utils.Auth;
+
 import io.jsonwebtoken.Jwts;
 import java.util.Date;
-import com.recibee.backend.config.Auth;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 

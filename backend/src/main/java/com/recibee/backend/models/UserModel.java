@@ -1,8 +1,10 @@
 package com.recibee.backend.models;
 
+import java.io.Serializable;
+
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 
-public class UserModel {
+public class UserModel implements Serializable{
     private String username;
     private String password;
     private String name;
@@ -43,4 +45,10 @@ public class UserModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "UserModel [username=" + username + ", password=" + password + ", name=" + name + "]";
+    }
+    
 }

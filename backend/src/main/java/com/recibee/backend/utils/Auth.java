@@ -1,4 +1,4 @@
-package com.recibee.backend.config;
+package com.recibee.backend.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
