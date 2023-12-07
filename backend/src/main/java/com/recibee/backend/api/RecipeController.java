@@ -1,9 +1,9 @@
 package com.recibee.backend.api;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import com.recibee.backend.managers.RecipeManager;
 import com.recibee.backend.models.RecipeModel;
@@ -11,7 +11,7 @@ import com.recibee.backend.models.RecipeModel;
 @RestController
 @CrossOrigin(origins = { "http://localhost:8081" })
 public class RecipeController {
-    @PostMapping("/recipe/{id}")
+    @GetMapping("/recipe/{id}")
     public RecipeModel getRecipe(@PathVariable("id") String id) {
         if (id == null) {
             return null;
@@ -23,7 +23,7 @@ public class RecipeController {
         return RecipeManager.getInstance().getRecipe(Integer.parseInt(id));
     }
 
-    @PostMapping("/recipes")
+    @GetMapping("/recipes")
     public RecipeModel[] getRecipes() {
         return RecipeManager.getInstance().getRecipes().values().toArray(new RecipeModel[0]);
     }

@@ -18,7 +18,8 @@ public class RecipeModel {
 
     }
 
-    public RecipeModel(int id, String name, String decription, String ingredients, int time, String steps, Double rate,
+    public RecipeModel(int id, String name, String decription, String ingredients, int time, String steps,
+            Double rate,
             String imagePath) {
         this.id = id;
         this.name = name;
