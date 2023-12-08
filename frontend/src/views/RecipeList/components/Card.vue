@@ -12,7 +12,7 @@
 
      <div class="recipefooter">
 
-        <div class="recipeName"> {{cardData.recipeName}}</div>  
+        <div class="recipeName"> {{cardData.name}}</div>  
          <img class="heart" :src="cardData.isFavorited ? favPath : notFavPath" alt="Heart" @click="toggleFavorite" />
   
      </div>
@@ -38,7 +38,7 @@ export default {
   } ,
 
   mounted(){
-   this.imagePath = require(`@/assets/${this.cardData.imagePath}`);
+   this.imagePath = "http://localhost:8080"+this.cardData.cover;
   },
 
   methods: {
