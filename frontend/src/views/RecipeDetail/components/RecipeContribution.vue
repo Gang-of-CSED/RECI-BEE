@@ -1,26 +1,22 @@
 <template>
-    <div class="user-container">
+    <div class="user-contribution">
         <div class="name-rate">
-            <h1>{{ this.userName }}</h1>
-            <v-rating v-model="this.rate" id="stars" hover clearable size="27.2"></v-rating>
+            <h1>{{ contribution.userName }}</h1>
+            <v-rating v-model="contribution.rate" id="stars" hover clearable size="27.2"></v-rating>
         </div>
-        <p>{{ this.comment }}</p>
+        <p>{{ contribution.comment }}</p>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'RecipeComment',
-    props: [
-        'userName',
-        'comment',
-        'rate'
-        ],
+    name: 'RecipeContribution',
+    props: ['contribution'],
 }
 </script>
 
 <style scoped>
-    .user-container {
+    .user-contribution {
         color: #312525;
         display: flex;
         flex-direction: column;
