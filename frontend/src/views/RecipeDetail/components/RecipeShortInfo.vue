@@ -1,43 +1,38 @@
 <template>
-
-    <div class="recipe-name">
-        <h1>{{ name }}</h1>
-        <v-icon size="42" color="#E35733" id="heart" @click="toggleFavorite">
-            {{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}
-        </v-icon>
-    </div>
-    <p>{{ description }}</p>
-    <div class="recipe-summary">
+    <div class="recipeShortInfo">
+        <div class="recipe-name">
+            <h1>{{ recipe.name }}</h1>
+            <v-icon size="42" color="#E35733" id="heart" @click="toggleFavorite">
+                {{ recipe.isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}
+            </v-icon>
+        </div>
+    <p>{{ recipe.description }}</p>
+    <div class="category-time">
         <div class="category">
             <h2>Categories:</h2>    
-            <p>{{ category }}</p>
+            <p>{{ recipe.category }}</p>
         </div>
         <div class="time">
             <h2>Time:</h2>
-            <p>{{ time }}</p>
-        </div>
-        <div class="rating">
-            <h2>Ratings:</h2>
-            <v-rating v-model="rate" id="stars" hover clearable size="27.2"></v-rating>
+            <p>{{ recipe.time }}</p>
         </div>
     </div>
-
+    <div class="rating">
+        <h2>Ratings:</h2>
+        <v-rating v-model="recipe.rate" id="stars" hover clearable size="27.2" :readonly="true"></v-rating>
+    </div>
+</div>
+    
 
 </template>
 
 <script>
 export default {
     name: "RecipeShortInfo",
-    props:[
-        'name',
-        'description',
-        'category',
-        'time',
-        'rate',
-        'isFavorite',
-    ],
+    props:['recipe'],
     methods: {
         toggleFavorite(){
+            this.recipe.isFavorite =!this.recipe.isFavorite
             this.$emit('toggleFavorite')
         }
     }
@@ -45,22 +40,22 @@ export default {
 </script>
 
 <style scoped>
-    .recipe-summary {
+    .recipeShortInfo {
+        margin-bottom: 10%;
+        border-bottom:#312525 1px solid;
+    }
+    .category-time{
         display: flex;
         justify-content: space-between;
-        margin: 5% 0 5% 0;
-        /* margin-bottom: 10px; */
-        flex-wrap: wrap;
-        /* align-items: center; */
-    }
-    .category {
-        margin-right: 20%;
     }
     .time {
-        margin-right: 45%;
+        margin-right: 50%;
+    } 
+    .rating h2{
+        margin-bottom: 0;
     }
     .rating {
-        margin-top: 3%;
+        margin: 2% 0 6% 0;
     }
     .recipe-name {
         display: flex;
@@ -97,7 +92,7 @@ export default {
         margin-bottom: 5%;
     }
     #stars {
-        color: #E35733
+        color: #E35733;
     }
 
 </style>

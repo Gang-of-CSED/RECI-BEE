@@ -4,7 +4,7 @@
     <NavBar/>
     <div class="wrapper">
       <RecipeInfo class="recipe-info"/>
-      <RecipeReview class="recipe-review"/>
+      <RecipeReview   class="recipe-review" />
     </div>
   </div>
 </template>
@@ -21,7 +21,8 @@ export default {
   },
   data() {
     return {
-      items: []
+      contributions: [],
+      recipes: [],
     }
   },
   mounted() {
@@ -30,10 +31,15 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await fetch('/path/to/data.json');
-        const data = await response.json();
-        this.items = data;
+        const contributions = await fetch('../../../data/contributions.json');
+        this.contributions = await contributions.json(); 
       } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+      try {
+        const recipes = await fetch('../../../data/recipe.json');
+        this.recipes = await recipes.json();
+      } catch (error) { 
         console.error('Error fetching data:', error);
       }
     }
@@ -57,9 +63,10 @@ export default {
 .recipe-review {
   flex: 1;
   padding: 1%;
+  margin-top: 2%;
 }
 .recipe-detail {
-  height: auto;
+  /* height: auto; */
   background: #FBF7EB;
 }
 
