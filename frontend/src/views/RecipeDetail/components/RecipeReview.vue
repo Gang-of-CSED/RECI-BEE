@@ -11,9 +11,9 @@
 
         <div class="new-comment">
             <h1>Comments</h1>
-            <v-rating v-model="rate" id="stars" hover clearable size="27.2"></v-rating>
+            <v-rating v-model="newComment.rate" id="stars" hover clearable size="27.2"></v-rating>
         </div>
-        <input v-model="newComment.comment" id="add-comment" type="text" placeholder="Add a comment"/>
+        <input v-model="newComment.comment" id="add-comment" type="text" placeholder="Add a comment" @keyup.enter="addComment"/>
         <!-- <button @click="addComment">Add Comment</button> -->
 
 
@@ -61,6 +61,18 @@ export default{
                 }
         ],
             newComment: {userName:"", rate:0, comment:""},
+        }
+    },
+    methods: {
+        addComment(){
+            this.comments.push({
+                userName: this.newComment.userName,
+                rate: this.newComment.rate,
+                comment: this.newComment.comment,
+            });
+            this.newComment.userName = "";
+            this.newComment.rate = 0;
+            this.newComment.comment = "";
         }
     }
 }
