@@ -1,16 +1,81 @@
 <template>
-    <NavBar/>
-    <div class="recipe-list">
-        <SideBar/>
-        <List/>
-    </div>
+    <div>
+     <NavBar />
+     <div class="recipe-list">
+         <SideBar  @filters-updated="filterRecipes"/>
+         <List  :recipiesArray="fltRecipes"/>
+     </div>
+    </div> 
 </template>
 
-<script setup>
+<script setup >
+import axios from 'axios';
 import NavBar from '../../components/NavBar.vue';
 import SideBar from './components/SideBar.vue';
 import List from './components/List.vue';
+import { ref, onMounted } from 'vue';
 
+
+const allRecipes = ref([]);
+const fltRecipes = ref([]);
+
+
+const filterRecipes = (selected) => {
+  // Helper function to convert time string to a comparable number (minutes)
+  const timeToMinutes = (time) => {
+    if (time === "5 - 10 Mins") return [5, 10];
+    if (time === "10 - 30 Mins") return [10, 30];
+    if (time === "30 - 60 Mins") return [30, 60];
+    if (time === "+1 Hour") return [61, Infinity];
+    return [0, 0];
+  };
+
+  const selectedTimeRanges = selected.time && selected.time.length > 0 ? selected.time.map(t => timeToMinutes(t)) : null;
+
+
+  fltRecipes.value = allRecipes.value.filter(recipe => {
+    
+    const categoryMatch = selected.categories && selected.categories.length > 0
+    ? recipe.categories.some(category => selected.categories.includes(category))
+      : true;
+
+    const timeMatch = selectedTimeRanges
+      ? selectedTimeRanges.some(([min, max]) => recipe.time >= min && recipe.time <= max)
+      : true;
+
+    const isLiked = selected.liked ? recipe.isFavorited : true;
+     
+    // console.log("reciperating",recipe.rate)
+    // console.log("selectedrating",selected.rating)
+
+    const ratingMatch = selected.rating === 0 || parseInt(recipe.rate) == parseInt(selected.rating);
+
+    return categoryMatch && timeMatch && isLiked && ratingMatch;
+  });
+
+//   console.log(JSON.stringify(fltRecipes.value, null, 2));
+  return fltRecipes.value;
+};
+
+onMounted(() => {
+
+    fetchAllRexipes();
+  }); 
+  const fetchAllRexipes=()=>{
+    axios.get('http://localhost:8080/recipes')
+              .then(response => {
+                allRecipes.value= response.data;
+                fltRecipes.value=response.data;
+                 console.log(JSON.stringify(allRecipes.value,null, 2));
+
+                // resolve(response.data);
+              })
+              .catch(error => {
+                console.error('There was an error!', error);
+                // reject(error);
+              });
+  };
+   
 </script>
 
 <style scoped>
@@ -18,6 +83,7 @@ import List from './components/List.vue';
     display: flex;
     flex-direction: row;
     height: 100%;
+    background: #FBF7EB;
 }
 
 </style>

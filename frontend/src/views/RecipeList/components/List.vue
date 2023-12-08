@@ -4,7 +4,7 @@
      <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div>
 
      <div class="recipies">
-         <Card v-for="card in recipiesArray" :key="card.recipeName" :card-data="card" @toggle-favorite="toggleFavorite" class="cards" />
+         <Card v-for="card in recipiesArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" class="cards" />
      </div>
 
    </div>
@@ -19,9 +19,12 @@ export default {
   components: {
     Card, 
   },
+  props: {
+    recipiesArray:Array,
+    },
   data() {
     return {
-      recipiesArray: [],
+      // recipiesArray: [],
     };
   },
   methods: {
@@ -33,14 +36,14 @@ export default {
     }
 
   },
-  mounted(){
-    fetch('http://localhost:3000/recipiesArray')
-    .then(response => response.json()) // Convert the response to JSON
-    .then(data => {
-      this.recipiesArray = data;
-    })
-    .catch(err => console.error("Error fetching recipes:", err));
-  }
+  // mounted(){
+  //   // fetch('http://localhost:3000/recipiesArray')
+  //   // .then(response => response.json()) // Convert the response to JSON
+  //   // .then(data => {
+  //   //   this.recipiesArray = data;
+  //   // })
+  //   // .catch(err => console.error("Error fetching recipes:", err));
+  // }
 };
 </script>
 <style scoped>
