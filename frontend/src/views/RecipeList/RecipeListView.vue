@@ -1,10 +1,13 @@
 <template>
     <div>
-     <NavBar />
-     <div class="recipe-list">
-         <SideBar  @filters-updated="filterRecipes"/>
-         <List  :recipiesArray="fltRecipes"/>
-     </div>
+      <NavBar />
+      <div class="recipe-list">
+        <SideBar  @filters-updated="filterRecipes"/>
+       <div class="showList">
+         <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div>
+         <List  :recipiesArray="fltRecipes"/> 
+       </div>
+        </div>
     </div> 
 </template>
 
@@ -85,5 +88,30 @@ onMounted(() => {
     height: 100%;
     background: #FBF7EB;
 }
+.showList{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+.slogan{
+  position: relative;
+  padding-right:1% ;
+  min-width:75vw;
+  display: flex;
+  justify-content: flex-end; /* Align text to the right horizontally */
+  align-items: center; /* Center vertically */
+  background:#FBBC3B;
+  min-height:12.153vw;
+}
+.slogan h6 {
+  text-align: right;
+  color: #FBF7EB;
+  font-style: normal;
+  font-size: 3.33vw;
+  font-weight: 700;
+  line-height: 1; /* Adjust the line height to control spacing between lines */
 
+  margin-right:2.45vw;
+}
 </style>

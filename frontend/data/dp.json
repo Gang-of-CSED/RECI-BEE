@@ -2,7 +2,6 @@
   "recipiesArray": [
       {
         "id":1,
-
         "name": "Bashamel Basta",
         "description":"d7k",
         "ingredients":"d7k",
@@ -62,7 +61,6 @@
         "cover": "Bashamel Basta.jpg",
         "categories": ["Dinner","Snacks"],
         "isFavorited": false
-
       }
       
     ]
