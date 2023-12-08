@@ -10,36 +10,79 @@
             <li>
                 <h3>Ratings</h3>
                 <hr>
-                
-                <v-rating  v-model="rating" id="stars"  hover clearable size="27.2" @click="emitFilters"></v-rating>
+                <v-rating  v-model="rating" id="stars"  hover clearable size="2.1vw" @click="emitFilters"></v-rating>
             </li>
             <li>
                 <h3>Categories</h3>
                 <hr>
                 <div class="filter">
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Breakfast" value="Breakfast"  @click="emitFilters"  ></v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Lunch" value="Lunch"  @click="emitFilters" ></v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Dinner" value="Dinner" @click="emitFilters" ></v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Snacks" value="Snacks" @click="emitFilters" ></v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Dessert" value="Dessert" @click="emitFilters" ></v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" label="Drinks" value="Drinks" @click="emitFilters" ></v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Breakfast"  @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">Breakfast</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Lunch"  @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">Lunch</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Dinner" @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">Dinner</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Snacks" @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">Snacks</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Dessert" @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">Dessert</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Drinks" @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">Drinks</span>
+                        </template>
+                    </v-checkbox>
                 </div>
             </li>
             <li>
                 <h3>Time</h3>
                 <hr>
                 <div class="filter" @click="emitFilters">
-                    <v-checkbox density="compact" v-model="time" hide-details class="labels" label="5 - 10 Mins" value="5 - 10 Mins" @click="emitFilters" ></v-checkbox>
-                    <v-checkbox density="compact" v-model="time" hide-details class="labels" label="10 - 30 Mins" value="10 - 30 Mins" @click="emitFilters" ></v-checkbox>
-                    <v-checkbox density="compact" v-model="time" hide-details class="labels" label="30 - 60 Mins" value="30 - 60 Mins" @click="emitFilters" ></v-checkbox>
-                    <v-checkbox density="compact" v-model="time" hide-details class="labels" label="+1 Hour" value="+1 Hour" @click="emitFilters" ></v-checkbox>
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="5 - 10 Mins" @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">5 - 10 Mins</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="10 - 30 Mins" @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">10 - 30 Mins</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="30 - 60 Mins" @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">30 - 60 Mins</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="+1 Hour" @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">+1 Hour</span>
+                        </template>
+                    </v-checkbox>
                 </div>
             </li>
             <li>
                 <h3>Liked</h3>
                 <hr>
                 <div class="filter">
-                    <v-checkbox density="compact" v-model="liked" hide-details class="labels" label="Show Liked Recipes" value="Liked"  @click="emitFilters" ></v-checkbox>
+                    <v-checkbox density="compact" v-model="liked" hide-details class="labels" value="Liked"  @click="emitFilters" >
+                        <template v-slot:label>
+                            <span class="lol">Show Liked Recipes</span>
+                        </template>
+                    </v-checkbox>
                 </div>
             </li>
         </ul>
@@ -139,7 +182,7 @@ hr {
         opacity: 3;
         font-weight: 500;
         height: 1.4vh;
-        font-size:1vw;
+        font-size:1.1vw;
         margin-bottom: 1.5vh;
     }
     .filter {
@@ -149,7 +192,14 @@ hr {
         margin-bottom: 1.80vh;
         width: 17vw;
     }
-   
+    #stars {
+        width: 17vw;
+        margin-top: 0.6vh;
+        font-size: 1.2vw;
+    }
+   .lol {
+       font-size: 1.2vw;
+   }
     /* ::v-deep .v-rating__wrapper {
         width: 5vw;
       justify-content: space-around;
