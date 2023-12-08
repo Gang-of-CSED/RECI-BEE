@@ -9,6 +9,7 @@ public class RecipeModel {
     String name;
     String description;
     String ingredients;
+    String[] categories;
     int time;
     String steps;
     Double rate;
@@ -18,13 +19,15 @@ public class RecipeModel {
 
     }
 
-    public RecipeModel(int id, String name, String decription, String ingredients, int time, String steps,
+    public RecipeModel(int id, String name, String decription, String ingredients, String[] categories, int time,
+            String steps,
             Double rate,
             String imagePath) {
         this.id = id;
         this.name = name;
         this.description = decription;
         this.ingredients = ingredients;
+        this.categories = categories;
         this.time = time;
         this.steps = steps;
         this.rate = rate;
@@ -62,6 +65,14 @@ public class RecipeModel {
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String[] getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String[] categories) {
+        this.categories = categories;
     }
 
     public int getTime() {
@@ -102,6 +113,7 @@ public class RecipeModel {
                 "name", name,
                 "description", description,
                 "ingredients", ingredients,
+                "categories", categories,
                 "time", time,
                 "steps", steps,
                 "rate", rate,
