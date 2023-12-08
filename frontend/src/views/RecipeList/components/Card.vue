@@ -76,7 +76,7 @@ export default {
   /* margin: 20px; */
   position: relative;
   background: #FBF7EB;
-  border: 1.5px solid #312525;
+  border: 1px solid #312525;
   /* border: 1.5% solid #312525;; */
   width: 15.625vw;
   height: 15.625vw;
