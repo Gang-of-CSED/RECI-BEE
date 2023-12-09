@@ -1,41 +1,26 @@
 <template>
     <div class="recipe-info">
         <div class="recipeImg">
-            <img class="Img" :src="imageSrc" alt="recipe" />
+            <img class="Img" :src="'http://localhost:8080' + recipe.cover" alt="recipe" />
         </div>
         <div class="Ingredients">
             <div class="intText">Ingredients:</div>
-            <div class="t1" v-html="ingredientsContent"></div>
+            <div class="t1" v-html="recipe.ingredients"></div>
         </div>
         <div class="breakLine">
             <hr>
         </div>
         <div class="Steps">
             <div class="stepText">Steps:</div>
-            <div class="t2" v-html="stepsContent"></div>
+            <div class="t2" v-html="recipe.steps"></div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-    data() {
-        return {
-        imageSrc:require('@/assets/image2.png'),
-        ingredientsContent:'',
-        stepsContent:''
-        };
-    },
-    mounted() {
-    import('./tempData.js').then((module) => {
-      this.ingredientsContent = module.ingContent;
-      this.stepsContent = module.stepContent
-    });
-    },
-    methods: {
-        
-    },
-    };
+        props:['recipe'],
+    }
 </script>
 
 <style scoped>
