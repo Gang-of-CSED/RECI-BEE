@@ -64,11 +64,11 @@
                         <form class="formC-content2 animate" action="/signup" method="post">
                             <div class="container">
                             <p>sign Up</p>
-                            <input class="text" type="text" placeholder="username" name="username" required>
-                            <input class="text" type="text" placeholder="email" name="email" required>
-                            <input class="psw" type="password" placeholder="password" name="psw" required>
-                            <input class="psw" type="password" placeholder="confirm password" name="cpsw" required>
-                            <button class="sbt" type="submit">Enter</button>
+                            <input v-model="signupForm.username" class="text" type="text" placeholder="username" name="username" required>
+                            <input v-model="signupForm.name" class="text" type="text" placeholder="name" name="name" required>
+                            <input v-model="signupForm.password" class="psw" type="password" placeholder="password" name="psw" required>
+                            <!-- <input class="psw" type="password" placeholder="confirm password" name="cpsw" required> -->
+                            <button class="sbt" type="submit" onclick="handleSignUp">Enter</button>
                             </div>
                         </form>
                         </div>
@@ -86,6 +86,17 @@
             imageSrc2:require('@/assets/p2.png'),
             imageSrc3:require('@/assets/p3.png'),
             imageSrc4:require('@/assets/p4.png'),
+            signupForm:{
+                username:'',
+                name:'',
+                password:'',
+                // cpassword:''
+            },
+            loginForm:{
+                username:'',
+                password:''
+            }
+            
 
 
         };
@@ -105,6 +116,22 @@
 
     },
     methods: {
+        handleSignUp(){
+            fetch(`http://localhost:8080/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: this.signupForm.username,
+                    name: this.signupForm.name,
+                    password: this.signupForm.password,
+                }),
+            })
+            .then(async () => {
+                document.getElementById('Signup').style.display='none';
+            })
+        }
         
     },
     };
