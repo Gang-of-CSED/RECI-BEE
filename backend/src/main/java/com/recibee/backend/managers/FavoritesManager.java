@@ -14,7 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recibee.backend.models.FavoritesModel;
 
 public class FavoritesManager {
-    private static final String FAVORITES_FILE_PATH = "backend\\src\\main\\java\\com\\recibee\\backend\\data\\favorites.json";
+    // private static final String FAVORITES_FILE_PATH = "backend\\src\\main\\java\\com\\recibee\\backend\\data\\favorites.json";
+    private static final String FAVORITES_FILE_PATH = Paths.get("").toAbsolutePath().toString()
+            + "\\src\\main\\java\\com\\recibee\\backend\\data\\favorites.json";
     private static FavoritesManager instance = null;
     private Map<Integer, FavoritesModel> favoritesMap = new HashMap<Integer, FavoritesModel>();
 

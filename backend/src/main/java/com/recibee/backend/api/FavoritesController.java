@@ -34,6 +34,7 @@ public class FavoritesController {
 
     @PutMapping("/{userId}/favorite/{recipeId}")
     public void addFavorite(@PathVariable("userId") String userId, @PathVariable("recipeId") String recipeId) {
+        System.out.println("addFavorite");
         if (userId == null || recipeId == null) {
             return;
         }

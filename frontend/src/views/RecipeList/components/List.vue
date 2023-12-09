@@ -35,9 +35,10 @@ export default {
         const index = this.recipiesArray.indexOf(card);
       
         this.recipiesArray[index].isFavorite=!this.recipiesArray[index].isFavorite;
+        console.log(this.recipiesArray)
       
         if(this.recipiesArray[index].isFavorite){
-          this.sendStateToBack('1','favorites',index);
+          this.sendStateToBack('1','favorite',index);
         }
         else{
           this.sendStateToBack('1','unfavorite',index);
@@ -48,6 +49,7 @@ export default {
       // console.log('http://localhost:8080/'+userId+'/'+favoriteState+'/'+recipeId);
       axios.put('http://localhost:8080/'+userId+'/'+favoriteState+'/'+recipeId)
               .then(response => {
+                console.log(response.data);
               })
               .catch(error => {
                 console.error('There was an error!', error);
