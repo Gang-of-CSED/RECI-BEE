@@ -4,7 +4,7 @@
     <NavBar/>
     <div class="wrapper">
       <RecipeInfo :recipe="recipe" class="recipe-info"/>
-      <RecipeReview :recipe="recipe" :contributions="contributions" class="recipe-review" />
+      <RecipeReview :recipe="recipe"  class="recipe-review" />
     </div>
   </div>
 </template>
@@ -30,15 +30,9 @@ export default {
   },
   methods: {
     async fetchData() {
+      const id = this.$route.params.id;
       try {
-        const contributions = await fetch("http://localhost:3001/contributions");
-        this.contributions = await contributions.json(); 
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-      try {
-        const id = this.$route.params.id;
-        const recipe = await fetch("http://localhost:3001/recipes/${id}");
+        const recipe = await fetch(`http://localhost:8080/recipe/${id}`);
         this.recipe = await recipe.json();
       } catch (error) { 
         console.error('Error fetching data:', error);

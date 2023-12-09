@@ -27,25 +27,48 @@ import RecipeShortInfo from './RecipeShortInfo.vue';
 
 export default{
     name: 'RecipeReview',
-    props: ['recipe', 'contributions'],
+    props: ['recipe'],
     components:{
         RecipeContribution,
         RecipeShortInfo,
     },
     data(){
         return{
-            newContribution: {user:'', rate:0, comment:''},
+            contributions: [],
+            newContribution: {user:'user', rate:0, comment:''},
         }
     },
+    mount() {
+        this.fetchContributions();
+    },
     methods: {
+        async fetchContributions(){
+            const id = this.$route.params.id 
+            try {
+                this.contributions  = (await fetch(`http://localhost:8080/comments/${id}`)).json();
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        },
         addContribution(){
             if(this.newContribution.comment.length > 0 && this.newContribution.rate > 0){
-                this.contributions.push({
-                user: this.newContribution.user,
-                rate: this.newContribution.rate,
-                comment: this.newContribution.comment,
-                });
-                this.newContribution.user = "";
+                const id = this.$route.params.id 
+                fetch(`http://localhost:8080/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        recipeId: id,
+                        user: this.newContribution.user,
+                        rating: this.newContribution.rate,
+                        comment: this.newContribution.comment,
+                    }),
+                })
+                .then(async () => {
+                    this.contributions = await (await fetch(`http://localhost:8080/comments/${id}`)).json();
+                })
+                this.newContribution.user = "user";
                 this.newContribution.rate = 0;
                 this.newContribution.comment = "";
             }

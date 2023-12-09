@@ -38,7 +38,7 @@ public class CommentManager {
     public List<CommentModel> getCommentsForRecipe(String recipeId) {
         List<CommentModel> comments = new ArrayList<CommentModel>();
         for (CommentModel comment : Comments.values()) {
-            if (comment.getRecipeId().equals(recipeId)) {
+            if (comment.getRecipeId() != null && comment.getRecipeId().equals(recipeId)) {
                 comments.add(comment);
             }
         }

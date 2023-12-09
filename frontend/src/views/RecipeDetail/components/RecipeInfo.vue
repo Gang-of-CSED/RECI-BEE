@@ -1,7 +1,7 @@
 <template>
     <div class="recipe-info">
         <div class="recipeImg">
-            <img class="Img" :src="recipe.cover" alt="recipe" />
+            <img class="Img" :src="'http://localhost:8080' + recipe.cover" alt="recipe" />
         </div>
         <div class="Ingredients">
             <div class="intText">Ingredients:</div>

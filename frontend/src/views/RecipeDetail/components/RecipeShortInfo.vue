@@ -8,9 +8,9 @@
         </div>
     <p v-html="recipe.description"></p>
     <div class="category-time">
-        <div class="category">
+        <div class="categories">
             <h2>Categories:</h2>    
-            <p v-html="recipe.category"></p>
+            <p v-for="category in recipe.categories" class="category"> {{ category }}</p>
         </div>
         <div class="time">
             <h2>Time:</h2>
@@ -40,6 +40,10 @@ export default {
 </script>
 
 <style scoped>
+    .category {
+        display: flex;
+        flex-direction: row;
+    }
     .recipeShortInfo {
         margin-bottom: 10%;
         border-bottom:#312525 1px solid;
