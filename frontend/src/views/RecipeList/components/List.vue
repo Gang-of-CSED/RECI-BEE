@@ -4,7 +4,7 @@
      <!-- <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div> -->
 
      <div class="recipies">
-         <Card v-for="card in recipiesArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" class="cards" />
+         <Card v-for="card in recipiesArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" class="cards" :user="user" />
      </div>
 
    </div>
@@ -22,6 +22,7 @@ export default {
   },
   props: {
     recipiesArray:Array,
+    user:Object,
     },
   data() {
     return {
