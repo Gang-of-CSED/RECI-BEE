@@ -21,6 +21,7 @@ import { ref, onMounted } from 'vue';
 
 const allRecipes = ref([]);
 const fltRecipes = ref([]);
+const userFavorites = ref([]);
 
 
 const filterRecipes = (selected) => {
@@ -62,14 +63,17 @@ const filterRecipes = (selected) => {
 
 onMounted(() => {
 
-    fetchAllRexipes();
+    fetchAllRecipes();
+    fetchUserFavorite();
+    // dummyfetch();
   }); 
-  const fetchAllRexipes=()=>{
+
+  const fetchAllRecipes=()=>{
     axios.get('http://localhost:8080/recipes')
               .then(response => {
                 allRecipes.value= response.data;
                 fltRecipes.value=response.data;
-                 console.log(JSON.stringify(allRecipes.value,null, 2));
+                //  console.log(JSON.stringify(allRecipes.value,null, 2));
 
                 // resolve(response.data);
               })
@@ -78,7 +82,50 @@ onMounted(() => {
                 // reject(error);
               });
   };
+
+  const fetchUserFavorite=()=>{
+    let userId=1;
+    axios.get('http://localhost:8080/'+userId+'/favorites')
+              .then(response => {
+                userFavorites.value= response.data;
+                matchFavorites();
+              })
+              .catch(error => {
+                console.error('There was an error!', error);
+
+              });
+  };
+  
+
+  //dummy fetching for testing 
+  // const dummyfetch=()=>{
+
+  //     fetch('http://localhost:3000/favorites')
+  //     .then((response) => response.json()) 
+  //     .then((data) => {
+  //       userFavorites.value = data;
+  //       matchFavorites();
+
+  //     //  console.log(JSON.stringify(userFavorites.value,null, 2));
+  //     })
+  //     .catch((err) => console.error('Error fetching shapes:', err));
+  //   };
+
+
+
+
+  const matchFavorites = () => {
+  allRecipes.value = allRecipes.value.map(recipe => {
+
+    const isFavorite = userFavorites.value.some(favorite => favorite.recipe_id === recipe.id);
+    return { ...recipe, isFavorite };
+  });
+    fltRecipes.value=allRecipes.value;
+      //  console.log(JSON.stringify(fltRecipes.value,null, 2));
+
+};
    
+
 </script>
 
 <style scoped>

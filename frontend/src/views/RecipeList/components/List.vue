@@ -13,6 +13,7 @@
 <script>
 
 import Card from './Card.vue'; 
+import axios from 'axios';
 
 export default {
   name: 'List.vue',
@@ -32,8 +33,25 @@ export default {
     toggleFavorite(card) {
         const index = this.recipiesArray.indexOf(card);
       
-        this.recipiesArray[index].isFavorited=!this.recipiesArray[index].isFavorited;
-    }
+        this.recipiesArray[index].isFavorite=!this.recipiesArray[index].isFavorite;
+      
+        if(this.recipiesArray[index].isFavorite){
+          this.sendStateToBack('1','favorites',index);
+        }
+        else{
+          this.sendStateToBack('1','unfavorite',index);
+        }
+
+    },
+    sendStateToBack(userId,favoriteState,recipeId){
+      // console.log('http://localhost:8080/'+userId+'/'+favoriteState+'/'+recipeId);
+      axios.put('http://localhost:8080/'+userId+'/'+favoriteState+'/'+recipeId)
+              .then(response => {
+              })
+              .catch(error => {
+                console.error('There was an error!', error);
+              });
+    },
 
   },
   // mounted(){
