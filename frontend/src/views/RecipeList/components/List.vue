@@ -1,10 +1,10 @@
 <template>
    <div class="list">
 
-     <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div>
+     <!-- <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div> -->
 
      <div class="recipies">
-         <Card v-for="card in recipiesArray" :key="card.recipeName" :card-data="card" @toggle-favorite="toggleFavorite" class="cards" />
+         <Card v-for="card in recipiesArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" class="cards" />
      </div>
 
    </div>
@@ -19,9 +19,12 @@ export default {
   components: {
     Card, 
   },
+  props: {
+    recipiesArray:Array,
+    },
   data() {
     return {
-      recipiesArray: [],
+      // recipiesArray: [],
     };
   },
   methods: {
@@ -33,14 +36,14 @@ export default {
     }
 
   },
-  mounted(){
-    fetch('http://localhost:3000/recipiesArray')
-    .then(response => response.json()) // Convert the response to JSON
-    .then(data => {
-      this.recipiesArray = data;
-    })
-    .catch(err => console.error("Error fetching recipes:", err));
-  }
+  // mounted(){
+  //   // fetch('http://localhost:3000/recipiesArray')
+  //   // .then(response => response.json()) // Convert the response to JSON
+  //   // .then(data => {
+  //   //   this.recipiesArray = data;
+  //   // })
+  //   // .catch(err => console.error("Error fetching recipes:", err));
+  // }
 };
 </script>
 <style scoped>
@@ -49,28 +52,30 @@ export default {
     width: 1000;
 } */
    .recipies{
-    padding:10px ;
+    /* padding:3% ; */
+    padding-top: 5%;
+    padding-left: 5%;
     flex-wrap: wrap;
     display: flex;
-    max-height: 550px;  
+    /* max-height: 550px;   */
     overflow-y: auto; /* Enable vertical scrolling when content overflows */
-    padding-bottom:10px ;
-      width: 1000;  
+    padding-bottom:7% ;
+      /* width: 1000;   */
     
 }
 .cards{
-  margin: 12px;
+  margin: 0.8333vw;
   /* flex: 0 0 calc(25% - 24px);  */
-  flex: 0 0 225; 
+  /* flex: 0 0 225;  */
   box-sizing: border-box; 
  
 }
-.slogan{
+/* .slogan{
   
   display: flex;
  
-  justify-content: flex-end; /* Align text to the right horizontally */
-  align-items: center; /* Center vertically */
+  justify-content: flex-end; 
+  align-items: center; 
   height: 175px;
   background:#FBBC3B;
   
@@ -81,7 +86,7 @@ export default {
   font-style: normal;
   font-size: 48px;
   font-weight: 700;
-  /* margin-top: 0; */
+
   margin-right:30px ;
-}
+} */
 </style>

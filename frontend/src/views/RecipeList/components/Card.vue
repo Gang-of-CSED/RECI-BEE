@@ -12,7 +12,7 @@
 
      <div class="recipefooter">
 
-        <div class="recipeName"> {{cardData.recipeName}}</div>  
+        <div class="recipeName" v-html="cardData.name" > </div>  
          <img class="heart" :src="cardData.isFavorited ? favPath : notFavPath" alt="Heart" @click="toggleFavorite" />
   
      </div>
@@ -38,7 +38,7 @@ export default {
   } ,
 
   mounted(){
-   this.imagePath = require(`@/assets/${this.cardData.imagePath}`);
+   this.imagePath = "http://localhost:8080"+this.cardData.cover;
   },
 
   methods: {
@@ -65,29 +65,33 @@ export default {
   position: absolute;
   top: 0; 
   left: 0; 
-  width: 40px; 
-  height: 40px; 
+  width: 2.78vh; 
+  height: 4.4445vh; 
   transform: translate(-50%, -50%); /* Center the star in the corner */
 }
 .Card{
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: 20px;
+  /* margin: 20px; */
   position: relative;
   background: #FBF7EB;
-  border: 1.5px solid #312525;
-  width: 225px;
-  height: 225px;
-  border-radius:15px;
+  border: 1px solid #312525;
+  /* border: 1.5% solid #312525;; */
+  width: 15.625vw;
+  height: 15.625vw;
+  border-radius:10%;
   border-bottom:5px solid #312525;
   }
 .recipeImg{
-  margin-top:12px ;
-  width: 205px;
-  height: 150px;
+  margin-top:0.69445vw ;
+  width: 14.236vw;
+  height:  10.4vw;
   overflow: hidden;
-  border-radius:10px;
+  /* border-radius:0.695vw; */
+  /* border-radius:10px; */
+  /* padding-top: 62.5%; 100% / 1.6 = 62.5% */
+  border-radius: 10%;
 }
   .custom-image {
     width: 100%;
@@ -95,8 +99,8 @@ export default {
     object-fit: cover; 
   }
 .recipefooter{
-  height: 50px;
-  width: 205px;
+  height: 4.445vw;
+  width: 14.236vw;
   justify-content: center; /* Center horizontally */
   align-items: center; 
   /* margin: 15px 7px; */
@@ -107,7 +111,7 @@ export default {
   /* font-family: 'Inter'; */
   font-style: normal;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 1.111vw;
 
   text-align: left;
   width: 85%;
@@ -115,10 +119,26 @@ export default {
 }
 .heart {
   position: relative;
-  width: 26px; /* Set the desired width */
-  height: 22px; /* Set the desired height */
+  width: 1.806vw; /* Set the desired width */
+  height: 2.45vh; /* Set the desired height */
   margin-top: 0px;
 }
+@media (max-width:426px) {
+  /* .Card{
 
+  border-bottom:3.5px solid #312525;
+  } */
+  /* .recipeImg{
+    margin-top:0.5vh ;
+
+  } */
+}
+@media (max-width:426px) {
+  .Card{
+
+    border: 1px solid rgba(49, 37, 37, 0.4);
+      border-bottom:3px solid #312525;
+  }
+}
 
 </style>
