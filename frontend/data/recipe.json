@@ -1,0 +1,5 @@
+{
+    "recipe": {"id":0,"name":"<p>Bashamel Pasta<p>","description":"<p>A creamy pasta dish with homemade Bachamel sauce.<p>","ingredients":"<p>250g pasta</p><p>2 cups milk</p><p>4 tbsp butter</p><p>4 tbsp all-purpose flour</p><p>Salt and pepper to taste</p>","categories":["Lunch","Dinner"],"time":120,"steps":"<p>Cook pasta according to package instructions.</p><p>In a saucepan, melt butter over medium heat.</p><p>Stir in flour and cook for 2-3 minutes until golden brown.</p><p>Gradually whisk in milk, stirring constantly until the sauce thickens.</p><p>Season with salt and pepper.</p><p>Combine the cooked pasta with the Béchamel sauce.</p><p>Pour into a baking dish and top with cheddar cheese.</p><p>Bake at 350°F for 20 minutes.</p><p>Serve hot and enjoy!</p>","rate":4.0,"cover":"/static/BashamelPasta.jpg"
+    },
+    "contributions" :[{"user":"hassaaaaaaan", "comment":"jkdjddjkkkkkkk", "rate":1}, {"user":"mouraaaaaaaa", "comment":"jkdjddjkkkdhshgdskkkk", "rate":5}]
+}
