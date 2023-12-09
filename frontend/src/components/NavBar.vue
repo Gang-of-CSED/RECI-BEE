@@ -6,14 +6,26 @@
             <li><a href="#">Dish Of The Day</a></li>
             <li><a href="#">Random Dish</a></li>
             <li><a href="#">About Us</a></li>
-            <li><h3>AbdElRahman Osama</h3></li>
+            <li>
+                <h3 v-if="logged">{{ username }}</h3>
+                <div v-else class="log">
+                    <button class="login">LOG IN</button>
+                    <button class="signup">SIGN UP</button>
+                </div>
+            </li>
         </ul>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'NavBar',
+    data(){
+        return{
+            name: 'NavBar',
+            username:"Abdelrhman Deif",
+            logged: false,
+        }
+    }
 }
 </script>
 
@@ -38,7 +50,6 @@ h3 {
 }
 ul {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     list-style: none;
     margin: 0 25.5px 0 0;
@@ -52,4 +63,39 @@ a {
     text-decoration: none;
     color : #312525;
 }
+.log{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5px;
+   
+
+}
+.login, .signup{
+    margin-right: 17px;
+    width: 105.26px;
+    height: 35.09px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+    border-radius: 10px;
+}
+.login{
+    border: #E35733 1px solid;
+    color: #E35733;
+}
+.signup{
+    background-color:#E35733;
+    color: #FBF7EB;
+
+}
+
+.login:hover, .signup:hover{
+    opacity: 70%;
+}
+.login:active, .signup:active{
+    scale: 110%;
+}
+
 </style>
