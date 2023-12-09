@@ -12,7 +12,7 @@
 
      <div class="recipefooter">
 
-        <div class="recipeName"> {{cardData.name}}</div>  
+        <div class="recipeName" v-html="cardData.name" > </div>  
          <img class="heart" :src="cardData.isFavorited ? favPath : notFavPath" alt="Heart" @click="toggleFavorite" />
   
      </div>
