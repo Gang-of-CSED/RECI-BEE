@@ -1,14 +1,16 @@
 <template>
-    <div>
-      <NavBar />
-      <div class="recipe-list">
-        <SideBar  @filters-updated="filterRecipes"/>
-       <div class="showList">
-         <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div>
-         <List  :recipiesArray="fltRecipes"/> 
-       </div>
+  <div>
+    <NavBar />
+    <div class="recipe-list">
+      <SideBar @filters-updated="filterRecipes" :user="user"/>
+      <div class="showList">
+        <div class="slogan">
+          <h6>Unlock The<br>Flavors Of The World</h6>
         </div>
-    </div> 
+        <List :recipiesArray="fltRecipes" :user="user"/>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup >
@@ -21,6 +23,7 @@ import { ref, onMounted } from 'vue';
 
 const allRecipes = ref([]);
 const fltRecipes = ref([]);
+const user=ref(null);
 
 
 const filterRecipes = (selected) => {
@@ -37,9 +40,9 @@ const filterRecipes = (selected) => {
 
 
   fltRecipes.value = allRecipes.value.filter(recipe => {
-    
+
     const categoryMatch = selected.categories && selected.categories.length > 0
-    ? recipe.categories.some(category => selected.categories.includes(category))
+      ? recipe.categories.some(category => selected.categories.includes(category))
       : true;
 
     const timeMatch = selectedTimeRanges
@@ -47,7 +50,7 @@ const filterRecipes = (selected) => {
       : true;
 
     const isLiked = selected.liked ? recipe.isFavorited : true;
-     
+
     // console.log("reciperating",recipe.rate)
     // console.log("selectedrating",selected.rating)
 
@@ -56,62 +59,86 @@ const filterRecipes = (selected) => {
     return categoryMatch && timeMatch && isLiked && ratingMatch;
   });
 
-//   console.log(JSON.stringify(fltRecipes.value, null, 2));
+  //   console.log(JSON.stringify(fltRecipes.value, null, 2));
   return fltRecipes.value;
 };
 
 onMounted(() => {
 
-    fetchAllRexipes();
-  }); 
-  const fetchAllRexipes=()=>{
-    axios.get('http://localhost:8080/recipes')
-              .then(response => {
-                allRecipes.value= response.data;
-                fltRecipes.value=response.data;
-                 console.log(JSON.stringify(allRecipes.value,null, 2));
+  fetchAllRexipes();
+});
 
-                // resolve(response.data);
-              })
-              .catch(error => {
-                console.error('There was an error!', error);
-                // reject(error);
-              });
-  };
-   
+
+const fetchAllRexipes = () => {
+  axios.get('http://localhost:8080/recipes')
+    .then(response => {
+      allRecipes.value = response.data;
+      fltRecipes.value = response.data;
+      console.log(JSON.stringify(allRecipes.value, null, 2));
+
+      // resolve(response.data);
+    })
+    .catch(error => {
+      console.error('There was an error!', error);
+      // reject(error);
+    });
+
+  const token= localStorage.getItem('token');
+  if(token){
+    axios.get('http://localhost:8080/info', {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+      .then(response => {
+        user.value = response.data;
+        console.log(JSON.stringify(user.value, null, 2));
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  }
+};
+
+// get user from local storage
 </script>
 
 <style scoped>
 .recipe-list {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    background: #FBF7EB;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  background: #FBF7EB;
 }
-.showList{
+
+.showList {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-content: flex-start;
 }
-.slogan{
+
+.slogan {
   position: relative;
-  padding-right:1% ;
-  min-width:75vw;
+  padding-right: 1%;
+  min-width: 75vw;
   display: flex;
-  justify-content: flex-end; /* Align text to the right horizontally */
-  align-items: center; /* Center vertically */
-  background:#FBBC3B;
-  min-height:12.153vw;
+  justify-content: flex-end;
+  /* Align text to the right horizontally */
+  align-items: center;
+  /* Center vertically */
+  background: #FBBC3B;
+  min-height: 12.153vw;
 }
+
 .slogan h6 {
   text-align: right;
   color: #FBF7EB;
   font-style: normal;
   font-size: 3.33vw;
   font-weight: 700;
-  line-height: 1; /* Adjust the line height to control spacing between lines */
+  line-height: 1;
+  /* Adjust the line height to control spacing between lines */
 
-  margin-right:2.45vw;
-}
-</style>
+  margin-right: 2.45vw;
+}</style>

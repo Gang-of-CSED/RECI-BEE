@@ -13,7 +13,7 @@
      <div class="recipefooter">
 
         <div class="recipeName" v-html="cardData.name" > </div>  
-         <img class="heart" :src="cardData.isFavorited ? favPath : notFavPath" alt="Heart" @click="toggleFavorite" />
+         <img v-if="user" class="heart" :src="cardData.isFavorited ? favPath : notFavPath" alt="Heart" @click="toggleFavorite" />
   
      </div>
 
@@ -26,6 +26,7 @@ export default {
   name: 'Card',
   props: {
     cardData: Object, 
+    user:Object,
   },
 
   data() {

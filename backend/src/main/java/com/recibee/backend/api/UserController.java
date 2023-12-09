@@ -42,8 +42,8 @@ public class UserController {
         return user;
     }
 
-    @GetMapping("/test")
-    public UserModel test(@RequestHeader String authorization) {
+    @GetMapping("/info")
+    public UserModel info(@RequestHeader String authorization) {
         try {
             return Auth.getUserModel(authorization);
 
