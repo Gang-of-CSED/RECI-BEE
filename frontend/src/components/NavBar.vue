@@ -79,6 +79,8 @@ export default {
 h1 {
     /* border: 1px solid black; */
 
+    /* border: 1px solid black; */
+
     margin: 0 0 0 57px;
     font-size: 36px;
     font-weight: 700;
@@ -86,10 +88,14 @@ h1 {
 h3 {
     /* border: 1px solid black; */
 
+    /* border: 1px solid black; */
+
     margin-left: 19px;
     font-size: 20px;
 }
 ul {
+    /* border: 1px solid rgb(199, 37, 137); */
+
     /* border: 1px solid rgb(199, 37, 137); */
 
     display: flex;
@@ -105,6 +111,8 @@ li {
     font-size: 15px;
 }
 a {
+    /* border: 1px solid rgb(207, 23, 23); */
+
     /* border: 1px solid rgb(207, 23, 23); */
 
     text-decoration: none;

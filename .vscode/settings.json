@@ -1,0 +1,7 @@
+{
+    "vetur.validation.template": false,
+"vetur.format.defaultFormatter.ts": "prettier-tslint",
+"vetur.format.defaultFormatter.js": "prettier-eslint",
+"java.compile.nullAnalysis.mode": "automatic",
+
+}
