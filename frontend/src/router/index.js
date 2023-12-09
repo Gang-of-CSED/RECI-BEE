@@ -6,6 +6,10 @@ import LandingPageView from '../views/LandingPage/LandingPageView.vue'
 const routes = [
   {
     path: '/',
+    redirect: '/recipes',
+  },
+  {
+    path: '/recipes',
     name: 'recipe-list',
     component: RecipeListView,
   },
