@@ -233,7 +233,7 @@
     margin-left: 7.5%;
 }
 
-.rd:hover, .rc:hover .login:hover, .signup:hover{
+.rd:hover, .rc:hover, .login:hover, .signup:hover{
     opacity: 70%;
 }
 .rd:active, .rc:active, .login:active, .signup:active{
