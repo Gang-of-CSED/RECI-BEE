@@ -2,115 +2,65 @@
   "recipiesArray": [
       {
         "id":1,
-        "isFavorited": true,
-        "isTheRandom": true,
-        "recipeName": "Bashamel Basta",
-        "imagePath": "Bashamel Basta.jpg"
+        "name": "Bashamel Basta",
+        "description":"d7k",
+        "ingredients":"d7k",
+        "time":60,
+        "rating":3.5,
+        "cover": "Bashamel Basta.jpg",
+        "categories": ["Dinner","Lunch"],
+        "isFavorited": true
       },
       {
         "id":2,
-        "isFavorited": false,
-        "isTheRandom": false,
-        "recipeName": "koshary",
-        "imagePath": "koshary.jpg"
+        "name": "koshary",
+        "description":"d7k",
+        "ingredients":"d7k",
+        "time":60,
+        "steps":"d7k",
+        "rating":3.5,
+        "categories": ["Dinner","Snacks"],
+        
+        "cover": "koshary.jpg",
+        "isFavorited": false
       },
       {
         "id":3,
-        "isFavorited": false,
-        "isTheRandom": false,
-        "recipeName": "Kousa Mahshi",
-        "imagePath": "Kousa Mahshi.jpg"
+        "name": "Kousa Mahshi",
+        "description":"d7k",
+        "ingredients":"d7k",
+        "time":60,
+        "steps":"d7k",
+        "rating":3.5,
+        "cover": "Kousa Mahshi.jpg",
+        "categories": ["Dinner","Snacks"],
+
+        "isFavorited": false
       },
       {
         "id":4,
-        "isFavorited": false,
-        "isTheRandom": false,
-        "recipeName": "Chicken Strips",
-        "imagePath": "Chicken Strips.jpg"
+        "name": "Chicken Strips",
+        "description":"d7k",
+        "ingredients":"d7k",
+        "time":60,
+        "steps":"d7k",
+        "cover": "Chicken Strips.jpg",
+        "rating":3.5,
+        "categories": ["Dinner","Snacks"],
+        "isFavorited": false
+       
       },
       {
         "id":5,
-        "isFavorited": false,
-        "isTheRandom": false,
-        "recipeName": "Bashamel Basta",
-        "imagePath": "Bashamel Basta.jpg"
-      },
-      {
-        "id":6,
-        "isFavorited": false,
-        "isTheRandom": false,
-        "recipeName": "koshary",
-        "imagePath": "koshary.jpg"
-      },
-      {
-        "id":7,
-        "isFavorited": false,
-         "isTheRandom": false,
-        "recipeName": "Kousa Mahshi",
-        "imagePath": "Kousa Mahshi.jpg"
-      },
-      {
-        "id":8,
-        "isFavorited": false,
-         "isTheRandom": false,
-        "recipeName": "Chicken Strips",
-        "imagePath": "Chicken Strips.jpg"
-      },
-      {
-        "id":9,
-        "isFavorited": false,
-        "isTheRandom": false,
-        "recipeName": "Bashamel Basta",
-        "imagePath": "Bashamel Basta.jpg"
-      },
-      {
-        "id":10,
-        "isFavorited": false,
-        "isTheRandom": false,
-        "recipeName": "koshary",
-        "imagePath": "koshary.jpg"
-      },
-      {
-        "id":11,
-        "isFavorited": false,
-         "isTheRandom": false,
-        "recipeName": "Kousa Mahshi",
-        "imagePath": "Kousa Mahshi.jpg"
-      },
-      {
-        "id":12,
-        "isFavorited": false,
-         "isTheRandom": false,
-        "recipeName": "Chicken Strips",
-        "imagePath": "Chicken Strips.jpg"
-      },
-      {
-        "id":13,
-        "isFavorited": false,
-        "isTheRandom": false,
-        "recipeName": "Bashamel Basta",
-        "imagePath": "Bashamel Basta.jpg"
-      },
-      {
-        "id":14,
-        "isFavorited": false,
-        "isTheRandom": false,
-        "recipeName": "koshary",
-        "imagePath": "koshary.jpg"
-      },
-      {
-        "id":15,
-        "isFavorited": false,
-         "isTheRandom": false,
-        "recipeName": "Kousa Mahshi",
-        "imagePath": "Kousa Mahshi.jpg"
-      },
-      {
-        "id":16,
-        "isFavorited": false,
-         "isTheRandom": false,
-        "recipeName": "Chicken Strips",
-        "imagePath": "Chicken Strips.jpg"
+        "name": "Bashamel Basta",
+        "description":"d7k",
+        "ingredients":"d7k",
+        "time":60,
+        "steps":"d7k",
+        "rating":3.5,
+        "cover": "Bashamel Basta.jpg",
+        "categories": ["Dinner","Snacks"],
+        "isFavorited": false
       }
       
     ]
