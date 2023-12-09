@@ -18,7 +18,7 @@ public class FavoritesController {
             return false;
         }
 
-        if (FavoritesManager.getInstance().isFavorite(Integer.parseInt(userId), Integer.parseInt(recipeId)) == true) {
+        if (FavoritesManager.getInstance().isFavorite((userId), Integer.parseInt(recipeId)) == true) {
             return true;
         }
         return false;
@@ -29,7 +29,7 @@ public class FavoritesController {
         if (userId == null) {
             return null;
         }
-        return FavoritesManager.getInstance().getFavorites(Integer.parseInt(userId));
+        return FavoritesManager.getInstance().getFavorites((userId));
     }
 
     @PutMapping("/{userId}/favorite/{recipeId}")
@@ -38,7 +38,7 @@ public class FavoritesController {
         if (userId == null || recipeId == null) {
             return;
         }
-        FavoritesManager.getInstance().addFavorite(Integer.parseInt(userId), Integer.parseInt(recipeId));
+        FavoritesManager.getInstance().addFavorite((userId), Integer.parseInt(recipeId));
     }
 
     @PutMapping("/{userId}/unfavorite/{recipeId}")
@@ -46,7 +46,7 @@ public class FavoritesController {
         if (userId == null || recipeId == null) {
             return;
         }
-        FavoritesManager.getInstance().removeFavorite(Integer.parseInt(userId), Integer.parseInt(recipeId));
+        FavoritesManager.getInstance().removeFavorite((userId), Integer.parseInt(recipeId));
     }
 
 }

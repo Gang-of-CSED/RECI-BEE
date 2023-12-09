@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class FavoritesModel {
-    int userId;
+    String userId;
     ArrayList<Integer> favorites;
 
     public FavoritesModel() {
 
     }
 
-    public FavoritesModel(int userId, ArrayList<Integer> favorites) {
+    public FavoritesModel(String userId, ArrayList<Integer> favorites) {
         this.userId = userId;
         this.favorites = favorites;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int id) {
+    public void setUserId(String id) {
         this.userId = id;
     }
 

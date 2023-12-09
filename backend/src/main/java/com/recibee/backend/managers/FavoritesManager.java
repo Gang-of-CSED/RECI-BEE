@@ -18,7 +18,7 @@ public class FavoritesManager {
     private static final String FAVORITES_FILE_PATH = Paths.get("").toAbsolutePath().toString()
             + "\\src\\main\\java\\com\\recibee\\backend\\data\\favorites.json";
     private static FavoritesManager instance = null;
-    private Map<Integer, FavoritesModel> favoritesMap = new HashMap<Integer, FavoritesModel>();
+    private Map<String, FavoritesModel> favoritesMap = new HashMap<String, FavoritesModel>();
 
     private FavoritesManager() {
     }
@@ -31,19 +31,19 @@ public class FavoritesManager {
         return instance;
     }
 
-    public FavoritesModel getFavorites(int userId) {
+    public FavoritesModel getFavorites(String userId) {
         return FavoritesManager.getInstance().favoritesMap.get(userId);
     }
 
-    public void addFavorites(int userId, ArrayList<Integer> favorites) {
+    public void addFavorites(String userId, ArrayList<Integer> favorites) {
         FavoritesManager.getInstance().favoritesMap.put(userId, new FavoritesModel(userId, favorites));
     }
 
-    public void removeFavorites(int userId) {
+    public void removeFavorites(String userId) {
         FavoritesManager.getInstance().favoritesMap.remove(userId);
     }
 
-    public void addFavorite(int userId, int recipeId) {
+    public void addFavorite(String userId, int recipeId) {
         if (!FavoritesManager.getInstance().favoritesMap.containsKey(userId)) {
             FavoritesManager.getInstance().favoritesMap.put(userId,
                     new FavoritesModel(userId, new ArrayList<Integer>()));
@@ -52,7 +52,7 @@ public class FavoritesManager {
         System.out.println("Added favorite: " + recipeId + " to user: " + userId);
     }
 
-    public void removeFavorite(int userId, int recipeId) {
+    public void removeFavorite(String userId, int recipeId) {
         if (!FavoritesManager.getInstance().favoritesMap.containsKey(userId)) {
             return;
         }
@@ -60,15 +60,15 @@ public class FavoritesManager {
         System.out.println("Removed favorite: " + recipeId + " from user: " + userId);
     }
 
-    public boolean isFavorite(int userId, int recipeId) {
+    public boolean isFavorite(String userId, int recipeId) {
         return FavoritesManager.getInstance().favoritesMap.get(userId).isFavorite(recipeId);
     }
 
-    public ArrayList<Integer> getFavoritesList(int userId) {
+    public ArrayList<Integer> getFavoritesList(String userId) {
         return FavoritesManager.getInstance().favoritesMap.get(userId).getFavorites();
     }
 
-    public void updateFavorites(int userId, ArrayList<Integer> favorites) {
+    public void updateFavorites(String userId, ArrayList<Integer> favorites) {
         FavoritesManager.getInstance().favoritesMap.get(userId).setFavorites(favorites);
     }
 
@@ -97,7 +97,7 @@ public class FavoritesManager {
             JsonNode root = mapper.readTree(json);
             for (JsonNode node : root) {
                 JsonNode userIdNode = node.get("userId");
-                int userId = userIdNode.asInt();
+                String userId = userIdNode.asText();
                 JsonNode favoritesNode = node.get("favorites");
                 ArrayList<Integer> favorites = new ArrayList<Integer>();
                 for (JsonNode favorite : favoritesNode) {

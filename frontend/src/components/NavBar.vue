@@ -124,8 +124,8 @@ export default {
             }).
                 then(response => response.json())
                 .then(data => {
-                    console.log(data)
-                    this.username = data.name
+                    console.log("navbar",data)
+                    this.username = data.username
                     this.logged = true;
                 })
 

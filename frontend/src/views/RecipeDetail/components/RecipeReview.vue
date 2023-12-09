@@ -39,6 +39,19 @@ export default{
         }
     },
     mounted() {
+        const token = localStorage.getItem('token');
+        if(token){
+            fetch("http://localhost:8080/info", {
+                headers: {
+                    Authorization: `${localStorage.getItem('token')}`
+                }
+            }).
+            then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.newContribution.user = data.username;
+            })
+        }
         this.fetchContributions();
     },
     methods: {

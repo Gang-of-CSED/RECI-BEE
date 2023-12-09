@@ -65,23 +65,23 @@ const filterRecipes = (selected) => {
 };
 
 onMounted(() => {
-  const token=localStorage.getItem('token');
-  if(token){
+  const token = localStorage.getItem('token');
+  if (token) {
     fetch("http://localhost:8080/info", {
-                headers:{
-                    Authorization: `${localStorage.getItem('token')}`
-                }
-            }).
-                then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    user.value=data;
-                })
+      headers: {
+        Authorization: `${localStorage.getItem('token')}`
+      }
+    }).
+      then(response => response.json())
+      .then(data => {
+        console.log(data);
+        user.value = data;
+        fetchUserFavorite();
+      })
 
   }
 
   fetchAllRecipes();
-  fetchUserFavorite();
   // dummyfetch();
 });
 
@@ -101,7 +101,7 @@ const fetchAllRecipes = () => {
 };
 
 const fetchUserFavorite = () => {
-  let userId = 1;
+  let userId = user.value?.username;
   axios.get('http://localhost:8080/' + userId + '/favorites')
     .then(response => {
       userFavorites.value = response.data;

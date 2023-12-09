@@ -38,10 +38,10 @@ export default {
         console.log(this.recipiesArray)
       
         if(this.recipiesArray[index].isFavorite){
-          this.sendStateToBack('1','favorite',index);
+          this.sendStateToBack(this.user.username,'favorite',index);
         }
         else{
-          this.sendStateToBack('1','unfavorite',index);
+          this.sendStateToBack(this.user.username,'unfavorite',index);
         }
 
     },
