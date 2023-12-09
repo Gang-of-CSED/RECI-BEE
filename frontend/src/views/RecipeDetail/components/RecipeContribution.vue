@@ -2,7 +2,7 @@
     <div class="user-contribution">
         <div class="name-rate">
             <h1>{{ contribution.user }}</h1>
-            <v-rating v-model="contribution.rate" id="stars" hover clearable size="27.2" :readonly="true"></v-rating>
+            <v-rating v-model="contribution.rating" id="stars" hover clearable size="27.2" :readonly="true"></v-rating>
         </div>
         <p>{{ contribution.comment }}</p>
     </div>

@@ -6,7 +6,7 @@
 
         <div class="new-contribution">
             <h1>Comments</h1>
-            <v-rating v-model="newContribution.rate" id="stars" hover clearable size="27.2"></v-rating>
+            <v-rating v-model="newContribution.rating" id="stars" hover clearable size="27.2"></v-rating>
         </div>
         <input v-model="newContribution.comment" id="add-contribution" type="text" placeholder="Add a comment" @keyup.enter="addContribution"/>
 
@@ -35,23 +35,23 @@ export default{
     data(){
         return{
             contributions: [],
-            newContribution: {user:'user', rate:0, comment:''},
+            newContribution: {user:'user', rating:0, comment:''},
         }
     },
-    mount() {
+    mounted() {
         this.fetchContributions();
     },
     methods: {
         async fetchContributions(){
             const id = this.$route.params.id 
             try {
-                this.contributions  = (await fetch(`http://localhost:8080/comments/${id}`)).json();
+                this.contributions  = await (await fetch(`http://localhost:8080/comments/${id}`)).json();
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         },
         addContribution(){
-            if(this.newContribution.comment.length > 0 && this.newContribution.rate > 0){
+            if(this.newContribution.comment.length > 0 && this.newContribution.rating > 0){
                 const id = this.$route.params.id 
                 fetch(`http://localhost:8080/comments`, {
                     method: 'POST',
@@ -61,7 +61,7 @@ export default{
                     body: JSON.stringify({
                         recipeId: id,
                         user: this.newContribution.user,
-                        rating: this.newContribution.rate,
+                        rating: this.newContribution.rating,
                         comment: this.newContribution.comment,
                     }),
                 })
@@ -69,7 +69,7 @@ export default{
                     this.contributions = await (await fetch(`http://localhost:8080/comments/${id}`)).json();
                 })
                 this.newContribution.user = "user";
-                this.newContribution.rate = 0;
+                this.newContribution.rating = 0;
                 this.newContribution.comment = "";
             }
         }
