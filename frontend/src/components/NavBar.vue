@@ -86,10 +86,14 @@ h1 {
 h3 {
     /* border: 1px solid black; */
 
+    /* border: 1px solid black; */
+
     margin-left: 19px;
     font-size: 20px;
 }
 ul {
+    /* border: 1px solid rgb(199, 37, 137); */
+
     /* border: 1px solid rgb(199, 37, 137); */
 
     display: flex;
@@ -101,10 +105,14 @@ ul {
 li {
     /* border: 1px solid rgb(0, 0, 0); */
 
+    /* border: 1px solid rgb(0, 0, 0); */
+
     margin: 0 20.5px;
     font-size: 15px;
 }
 a {
+    /* border: 1px solid rgb(207, 23, 23); */
+
     /* border: 1px solid rgb(207, 23, 23); */
 
     text-decoration: none;
@@ -282,5 +290,48 @@ input[type=text], input[type=password] {
   to {transform: scale(1)}
 }
 
+
+
+@media (min-width:0px) {
+    .navbar {
+        flex-direction: row; 
+        height: auto;
+        /* justify-content: center; Center items horizontally */
+       /* border: 1px solid rgb(252, 32, 32); */
+
+        /* padding: 10px 0;  */
+    }
+    h1{
+        padding: 0; 
+        margin: 0px 0vw 0px 4vw;
+        font-size: 2.5vw; 
+    }
+    h3{
+        padding: 0; 
+        margin: 0 1vw 0 0;
+        font-size: 1.6vw; 
+    }
+    ul {
+
+        flex-direction: row; 
+        flex-wrap: nowrap;
+        margin: 3vw 0px 3vw  10vw; 
+        
+    }
+    li {
+        display: flex;
+
+        /* border: 1px solid rgb(252, 32, 32); */
+         
+        margin: 0 1.5vw;
+    }
+    a {
+       /* padding: 30px; */
+       display: inline-block;
+
+       /* padding-bottom: 1vw; */
+        font-size: 1.25vw;
+    }
+}
 
 </style>
