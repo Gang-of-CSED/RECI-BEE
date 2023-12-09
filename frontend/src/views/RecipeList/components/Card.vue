@@ -13,7 +13,7 @@
      <div class="recipefooter">
 
         <div class="recipeName" v-html="cardData.name" > </div>  
-         <img class="heart" :src="cardData.isFavorited ? favPath : notFavPath" alt="Heart" @click="toggleFavorite" />
+         <img class="heart" :src="cardData.isFavorite ? favPath : notFavPath" alt="Heart" @click="toggleFavorite" />
   
      </div>
 
@@ -46,6 +46,7 @@ export default {
       toggleFavorite() {
         event.stopPropagation();
         this.$emit('toggle-favorite', this.cardData);
+        // console.log(this.cardData);
       },
 
       // redirectToCard() {

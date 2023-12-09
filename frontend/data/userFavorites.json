@@ -1,0 +1,12 @@
+{
+   "favorites":[
+        {
+        "user_id":"ahmad",
+        "recipe_id":5
+        },
+        {
+        "user_id":"ahmad",
+        "recipe_id":1
+        }
+    ]
+}
