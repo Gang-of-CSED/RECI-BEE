@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import RecipeListView from '../views/RecipeList/RecipeListView.vue'
 import RecipeDetailView from '../views/RecipeDetail/RecipeDetailView.vue'
+import LandingPageView from '../views/LandingPage/LandingPageView.vue'
+
 const routes = [
   {
     path: '/',
@@ -11,6 +13,11 @@ const routes = [
     path: '/recipe/:id',
     name: 'recipe-detail',
     component: RecipeDetailView,
+  },
+  {
+    path: '/home',
+    name: 'landing-page',
+    component: LandingPageView,
   },
 ]
 
