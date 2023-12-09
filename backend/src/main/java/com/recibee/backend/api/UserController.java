@@ -2,9 +2,11 @@ package com.recibee.backend.api;
 
 import java.time.temporal.ChronoUnit;
 
+import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.recibee.backend.managers.UserManager;
@@ -22,11 +24,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
 
     @PostMapping("/login")
-    public String login(String username, String password) {
-        UserModel user = UserManager.getInstance().getUser(username);
-        if (user != null && user.getPassword().equals(password)) {
-            // generate jwt from username
-            String jwtToken = Auth.getToken(username);
+    public String login(@RequestBody UserModel requser) {
+                System.out.println("login");
+                System.out.println(requser.getUsername());
+                System.out.println(requser.getPassword());
+
+        UserModel user = UserManager.getInstance().getUser(requser.getUsername());
+        if (user != null && user.getPassword().equals(requser.getPassword())) {
+            // generate jwt from user.getUsername()
+            String jwtToken = Auth.getToken(requser.getUsername());
+                    System.out.println("logged in");
 
             return jwtToken;
         }
@@ -34,16 +41,18 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public UserModel register(String username, String password, String name) {
-        if (username == null || password == null || name == null)
+    public UserModel register(@RequestBody UserModel user) {
+        System.out.println("register");
+        if (user.getUsername()== null || user.getPassword() == null || user.getName() == null)
             return null;
-        UserModel user = new UserModel(username, password, name);
+        System.out.println("registered");
+        user = new UserModel(user.getUsername(), user.getPassword(), user.getName());
         UserManager.getInstance().addUser(user);
         return user;
     }
 
-    @GetMapping("/test")
-    public UserModel test(@RequestHeader String authorization) {
+    @GetMapping("/info")
+    public UserModel info(@RequestHeader String authorization) {
         try {
             return Auth.getUserModel(authorization);
 

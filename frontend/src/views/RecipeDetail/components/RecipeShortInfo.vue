@@ -3,7 +3,7 @@
         <div class="recipe-name">
             <h1 v-html="recipe.name"></h1>
             <v-icon size="42" color="#E35733" id="heart" @click="toggleFavorite">
-                {{ recipe.isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}
+                {{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}
             </v-icon>
         </div>
     <p v-html="recipe.description"></p>
@@ -27,13 +27,53 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: "RecipeShortInfo",
     props:['recipe'],
+    data(){
+        return{
+            isFavorite: false,
+            user: null,
+        }
+    },
+    mounted(){
+        const token = localStorage.getItem('token');
+        if(token){
+            fetch("http://localhost:8080/info", {
+                headers: {
+                    Authorization: `${localStorage.getItem('token')}`
+                }
+            }).
+            then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.user = data;
+                let username=data.username;
+                let recipeId=this.$route.params.id;
+                fetch(`http://localhost:8080/${username}/favorite/${recipeId}`)
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    // convert to boolean
+                    this.isFavorite = data === 'true';
+                })
+            })
+        }
+    },
     methods: {
         toggleFavorite(){
-            this.recipe.isFavorite =!this.recipe.isFavorite
-            this.$emit('toggleFavorite')
+            console.log("toggleFavorite")
+            this.isFavorite =!this.isFavorite
+            let favoriteState = this.isFavorite ? 'favorite' : 'unfavorite';
+            let recipeId = this.$route.params.id;
+            axios.put('http://localhost:8080/'+this.user.username+'/'+favoriteState+'/'+recipeId)
+              .then(response => {
+                console.log(response.data);
+              })
+              .catch(error => {
+                console.error('There was an error!', error);
+              });
         }
     }
 }

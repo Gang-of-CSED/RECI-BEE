@@ -1,6 +1,8 @@
 <template>
     <div class="navbar">
-        <div><h1>RECI-BEE</h1></div>
+        <div>
+            <h1>RECI-BEE</h1>
+        </div>
         <ul>
             <li><a href="#">Browse Catalogue</a></li>
             <li><a href="#">Dish Of The Day</a></li>
@@ -10,30 +12,36 @@
                 <h3 v-if="logged">{{ username }}</h3>
                 <div v-else class="log">
                     <button class="login" onclick="document.getElementById('Login').style.display='block'">LOG IN</button>
-                        <div id="Login" class="formC">
-                        <form class="formC-content animate" action="/login" method="post">
+                    <div id="Login" class="formC">
+                        <form class="formC-content animate">
                             <div class="container">
-                            <p>sign In</p>
-                            <input class="text" type="text" placeholder="username/email" name="username" required>
-                            <input class="psw" type="password" placeholder="password" name="psw" required>
-                            <button class="sbt" type="submit">Enter</button>
+                                <p>sign In</p>
+                                <input v-model="loginForm.username" class="text" type="text" placeholder="username/email"
+                                    name="username" required>
+                                <input v-model="loginForm.password" class="psw" type="password" placeholder="password"
+                                    name="psw" required>
+                                <button class="sbt" @click="handleLogIn">Enter</button>
                             </div>
                         </form>
-                        </div>
+                    </div>
 
-                        <button class="signup" onclick="document.getElementById('Signup').style.display='block'">SIGN UP</button>
-                        <div id="Signup" class="formC">
-                        <form class="formC-content2 animate" action="/signup" method="post">
+                    <button class="signup" onclick="document.getElementById('Signup').style.display='block'">SIGN
+                        UP</button>
+                    <div id="Signup" class="formC">
+                        <form class="formC-content2 animate">
                             <div class="container">
-                            <p>sign Up</p>
-                            <input class="text" type="text" placeholder="username" name="username" required>
-                            <input class="text" type="text" placeholder="email" name="email" required>
-                            <input class="psw" type="password" placeholder="password" name="psw" required>
-                            <input class="psw" type="password" placeholder="confirm password" name="cpsw" required>
-                            <button class="sbt" type="submit">Enter</button>
+                                <p>sign Up</p>
+                                <input v-model="signupForm.username" class="text" type="text" placeholder="username"
+                                    name="username" required>
+                                <input v-model="signupForm.name" class="text" type="text" placeholder="name" name="name"
+                                    required>
+                                <input v-model="signupForm.password" class="psw" type="password" placeholder="password"
+                                    name="psw" required>
+                                <!-- <input class="psw" type="password" placeholder="confirm password" name="cpsw" required> -->
+                                <button class="sbt" @click="handleSignUp">Enter</button>
                             </div>
                         </form>
-                        </div>
+                    </div>
 
                 </div>
             </li>
@@ -41,19 +49,90 @@
     </div>
 </template>
 
-<script>
+<script scoped>
 export default {
-    data(){
-        return{
+    data() {
+        return {
             name: 'NavBar',
-            username:"Abdelrhman Deif",
+            username: "Abdelrhman Deif",
             logged: false,
+            signupForm: {
+                username: '',
+                name: '',
+                password: '',
+                // cpassword:''
+            },
+            loginForm: {
+                username: '',
+                password: ''
+            }
+
         }
     },
-    mounted(){
+    methods: {
+
+        handleSignUp(e) {
+            e.preventDefault();
+            console.log(this.signupForm)
+            fetch(`http://localhost:8080/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: this.signupForm.username,
+                    name: this.signupForm.name,
+                    password: this.signupForm.password,
+                }),
+            })
+                .then(response => response.json())
+                .then((data) => {
+                    console.log(data)
+                    document.getElementById('Signup').style.display = 'none';
+                })
+        },
+        handleLogIn(e) {
+            e.preventDefault();
+            fetch(`http://localhost:8080/login`, {
+                method: 'POST',
+                // send data as form not as stringified JSON
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: this.loginForm.username,
+                    password: this.loginForm.password,
+                }), // body data type must match "Content-Type" header
+
+            })
+                .then(response => response.text())
+                .then(async (data) => {
+                    console.log(data)
+                    document.getElementById('Login').style.display = 'none';
+                    localStorage.setItem('token', data);
+                    this.$router.push({ name: 'recipe-list' });
+                })
+        }
+    },
+    mounted() {
+        console.log(localStorage.getItem('token'))
+        if (localStorage.getItem('token')) {
+            fetch("http://localhost:8080/info", {
+                headers:{
+                    Authorization: `${localStorage.getItem('token')}`
+                }
+            }).
+                then(response => response.json())
+                .then(data => {
+                    console.log("navbar",data)
+                    this.username = data.username
+                    this.logged = true;
+                })
+
+        }
         var formC = document.getElementById('Login');
-        var formC2= document.getElementById('Signup');
-        window.onclick = function(event) {
+        var formC2 = document.getElementById('Signup');
+        window.onclick = function (event) {
             if (event.target == formC) {
                 formC.style.display = "none";
             }
@@ -76,6 +155,7 @@ export default {
     align-items: center;
     color: #312525;
 }
+
 h1 {
     /* border: 1px solid black; */
 
@@ -85,6 +165,7 @@ h1 {
     font-size: 36px;
     font-weight: 700;
 }
+
 h3 {
     /* border: 1px solid black; */
 
@@ -93,6 +174,7 @@ h3 {
     margin-left: 19px;
     font-size: 20px;
 }
+
 ul {
     /* border: 1px solid rgb(199, 37, 137); */
 
@@ -104,28 +186,33 @@ ul {
     margin: 0 25.5px 0 0;
     padding: 0;
 }
+
 li {
     /* border: 1px solid rgb(0, 0, 0); */
 
     margin: 0 20.5px;
     font-size: 15px;
 }
+
 a {
     /* border: 1px solid rgb(207, 23, 23); */
 
     /* border: 1px solid rgb(207, 23, 23); */
 
     text-decoration: none;
-    color : #312525;
+    color: #312525;
 }
-.log{
+
+.log {
     display: flex;
     justify-content: space-between;
     margin-right: 5px;
-   
+
 
 }
-.login, .signup{
+
+.login,
+.signup {
     margin-right: 17px;
     width: 105.26px;
     height: 35.09px;
@@ -136,66 +223,119 @@ a {
     text-align: center;
     border-radius: 10px;
 }
-.login{
+
+.login {
     border: #E35733 1px solid;
     color: #E35733;
 }
-.signup{
-    background-color:#E35733;
+
+.signup {
+    background-color: #E35733;
     color: #FBF7EB;
 
 }
 
-.login:hover, .signup:hover{
+.login:hover,
+.signup:hover {
     opacity: 70%;
 }
-.login:active, .signup:active{
+
+.login:active,
+.signup:active {
+    scale: 110%;
+}
+
+.log {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5px;
+
+
+}
+
+.login,
+.signup {
+    margin-right: 17px;
+    width: 105.26px;
+    height: 35.09px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.login {
+    border: #E35733 1px solid;
+    color: #E35733;
+}
+
+.signup {
+    background-color: #E35733;
+    color: #FBF7EB;
+
+}
+
+.login:hover,
+.signup:hover {
+    opacity: 70%;
+}
+
+.login:active,
+.signup:active {
     scale: 110%;
 }
 
 @media (min-width:0px) {
     .navbar {
-        flex-direction: row; 
+        flex-direction: row;
         height: auto;
         /* justify-content: center; Center items horizontally */
-       /* border: 1px solid rgb(252, 32, 32); */
+        /* border: 1px solid rgb(252, 32, 32); */
 
         /* padding: 10px 0;  */
     }
-    h1{
-        padding: 0; 
+
+    h1 {
+        padding: 0;
         margin: 0px 0vw 0px 4vw;
-        font-size: 2.5vw; 
+        font-size: 2.5vw;
     }
-    h3{
-        padding: 0; 
+
+    h3 {
+        padding: 0;
         margin: 0 1vw 0 0;
-        font-size: 1.6vw; 
+        font-size: 1.6vw;
     }
+
     ul {
 
-        flex-direction: row; 
+        flex-direction: row;
         flex-wrap: nowrap;
-        margin: 3vw 0px 3vw  10vw; 
-        
+        margin: 3vw 0px 3vw 10vw;
+
     }
+
     li {
         display: flex;
 
         /* border: 1px solid rgb(252, 32, 32); */
-         
+
         margin: 0 1.5vw;
     }
-    a {
-       /* padding: 30px; */
-       display: inline-block;
 
-       /* padding-bottom: 1vw; */
+    a {
+        /* padding: 30px; */
+        display: inline-block;
+
+        /* padding-bottom: 1vw; */
         font-size: 1.25vw;
     }
 }
 
-input[type=text], input[type=password] {
+input[type=text],
+input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -203,10 +343,10 @@ input[type=text], input[type=password] {
     box-sizing: border-box;
 }
 
-.sbt{
+.sbt {
     background-color: #E35733;
     color: #FBF7EB;
-    margin:12% 37%;
+    margin: 12% 37%;
     border-radius: 10px;
     cursor: pointer;
     width: 83px;
@@ -221,7 +361,8 @@ input[type=text], input[type=password] {
 .sbt:hover {
     opacity: 0.8;
 }
-.sbt:active{
+
+.sbt:active {
     scale: 110%;
 }
 
@@ -229,8 +370,8 @@ input[type=text], input[type=password] {
     padding: 16px;
 }
 
-.container p{
-    margin: 8% auto ;
+.container p {
+    margin: 8% auto;
     font-size: 48px;
     font-weight: 700;
     line-height: 58px;
@@ -239,7 +380,8 @@ input[type=text], input[type=password] {
     color: #FBF7EB;
 }
 
-.text, .psw{
+.text,
+.psw {
     width: 273px;
     height: 64px;
     border-radius: 10px;
@@ -248,47 +390,58 @@ input[type=text], input[type=password] {
 }
 
 .formC {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
+    display: none;
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0,0,0,0.4); 
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
     padding-top: 60px;
 }
 
-.formC-content, .formC-content2{
+.formC-content,
+.formC-content2 {
     border-radius: 15px;
 }
-.formC-content{
-    margin: 5% auto 15% auto; 
+
+.formC-content {
+    margin: 5% auto 15% auto;
     background-color: #FBBC3B;
-    width: 360px; 
+    width: 360px;
     height: 400px;
 }
-.formC-content2{
-    margin: 3% auto 10% auto; 
+
+.formC-content2 {
+    margin: 3% auto 10% auto;
     background-color: #B3D0E8;
-    width: 360px; 
+    width: 360px;
     height: 569px;
 }
 
 .animate {
-  -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
 }
 
 @-webkit-keyframes animatezoom {
-  from {-webkit-transform: scale(0)} 
-  to {-webkit-transform: scale(1)}
+    from {
+        -webkit-transform: scale(0)
+    }
+
+    to {
+        -webkit-transform: scale(1)
+    }
 }
-  
+
 @keyframes animatezoom {
-  from {transform: scale(0)} 
-  to {transform: scale(1)}
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
 }
-
-
 </style>

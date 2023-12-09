@@ -1,14 +1,16 @@
 <template>
-    <div>
-      <NavBar />
-      <div class="recipe-list">
-        <SideBar  @filters-updated="filterRecipes"/>
-       <div class="showList">
-         <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div>
-         <List  :recipiesArray="fltRecipes"/> 
-       </div>
+  <div>
+    <NavBar />
+    <div class="recipe-list">
+      <SideBar @filters-updated="filterRecipes" :user="user" />
+      <div class="showList">
+        <div class="slogan">
+          <h6>Unlock The<br>Flavors Of The World</h6>
         </div>
-    </div> 
+        <List :recipiesArray="fltRecipes" :user="user" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup >
@@ -22,6 +24,7 @@ import { ref, onMounted } from 'vue';
 const allRecipes = ref([]);
 const fltRecipes = ref([]);
 const userFavorites = ref([]);
+const user = ref(null);
 
 
 const filterRecipes = (selected) => {
@@ -38,17 +41,17 @@ const filterRecipes = (selected) => {
 
 
   fltRecipes.value = allRecipes.value.filter(recipe => {
-    
+
     const categoryMatch = selected.categories && selected.categories.length > 0
-    ? recipe.categories.some(category => selected.categories.includes(category))
+      ? recipe.categories.some(category => selected.categories.includes(category))
       : true;
 
     const timeMatch = selectedTimeRanges
       ? selectedTimeRanges.some(([min, max]) => recipe.time >= min && recipe.time <= max)
       : true;
 
-    const isLiked = selected.liked ? recipe.isFavorited : true;
-     
+    const isLiked = selected.liked ? recipe.isFavorite : true;
+
     // console.log("reciperating",recipe.rate)
     // console.log("selectedrating",selected.rating)
 
@@ -57,108 +60,128 @@ const filterRecipes = (selected) => {
     return categoryMatch && timeMatch && isLiked && ratingMatch;
   });
 
-//   console.log(JSON.stringify(fltRecipes.value, null, 2));
+  //   console.log(JSON.stringify(fltRecipes.value, null, 2));
   return fltRecipes.value;
 };
 
 onMounted(() => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    fetch("http://localhost:8080/info", {
+      headers: {
+        Authorization: `${localStorage.getItem('token')}`
+      }
+    }).
+      then(response => response.json())
+      .then(data => {
+        console.log(data);
+        user.value = data;
+        fetchUserFavorite();
+      })
 
-    fetchAllRecipes();
-    fetchUserFavorite();
-    // dummyfetch();
-  }); 
+  }
 
-  const fetchAllRecipes=()=>{
-    axios.get('http://localhost:8080/recipes')
-              .then(response => {
-                allRecipes.value= response.data;
-                fltRecipes.value=response.data;
-                //  console.log(JSON.stringify(allRecipes.value,null, 2));
+  fetchAllRecipes();
+  // dummyfetch();
+});
 
-                // resolve(response.data);
-              })
-              .catch(error => {
-                console.error('There was an error!', error);
-                // reject(error);
-              });
-  };
+const fetchAllRecipes = () => {
+  axios.get('http://localhost:8080/recipes')
+    .then(response => {
+      allRecipes.value = response.data;
+      fltRecipes.value = response.data;
+      //  console.log(JSON.stringify(allRecipes.value,null, 2));
 
-  const fetchUserFavorite=()=>{
-    let userId=1;
-    axios.get('http://localhost:8080/'+userId+'/favorites')
-              .then(response => {
-                userFavorites.value= response.data;
-                matchFavorites();
-              })
-              .catch(error => {
-                console.error('There was an error!', error);
+      // resolve(response.data);
+    })
+    .catch(error => {
+      console.error('There was an error!', error);
+      // reject(error);
+    });
+};
 
-              });
-  };
-  
+const fetchUserFavorite = () => {
+  let userId = user.value?.username;
+  axios.get('http://localhost:8080/' + userId + '/favorites')
+    .then(response => {
+      userFavorites.value = response.data;
+      matchFavorites();
+    })
+    .catch(error => {
+      console.error('There was an error!', error);
 
-  //dummy fetching for testing 
-  // const dummyfetch=()=>{
-
-  //     fetch('http://localhost:3000/favorites')
-  //     .then((response) => response.json()) 
-  //     .then((data) => {
-  //       userFavorites.value = data;
-  //       matchFavorites();
-
-  //     //  console.log(JSON.stringify(userFavorites.value,null, 2));
-  //     })
-  //     .catch((err) => console.error('Error fetching shapes:', err));
-  //   };
-
+    });
+};
 
 
+//dummy fetching for testing 
+// const dummyfetch=()=>{
 
-  const matchFavorites = () => {
+//     fetch('http://localhost:3000/favorites')
+//     .then((response) => response.json()) 
+//     .then((data) => {
+//       userFavorites.value = data;
+//       matchFavorites();
+
+//     //  console.log(JSON.stringify(userFavorites.value,null, 2));
+//     })
+//     .catch((err) => console.error('Error fetching shapes:', err));
+//   };
+
+
+
+
+const matchFavorites = () => {
   allRecipes.value = allRecipes.value.map(recipe => {
-
-    const isFavorite = userFavorites.value.some(favorite => favorite.recipe_id === recipe.id);
+    console.log(userFavorites.value)
+    const isFavorite = userFavorites.value.favorites.some(favorite => favorite === recipe.id);
     return { ...recipe, isFavorite };
   });
-    fltRecipes.value=allRecipes.value;
-      //  console.log(JSON.stringify(fltRecipes.value,null, 2));
+  fltRecipes.value = allRecipes.value;
+  //  console.log(JSON.stringify(fltRecipes.value,null, 2));
 
 };
-   
+
 
 </script>
 
 <style scoped>
 .recipe-list {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    background: #FBF7EB;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  background: #FBF7EB;
 }
-.showList{
+
+.showList {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-content: flex-start;
 }
-.slogan{
+
+.slogan {
   position: relative;
-  padding-right:1% ;
-  min-width:75vw;
+  padding-right: 1%;
+  min-width: 75vw;
   display: flex;
-  justify-content: flex-end; /* Align text to the right horizontally */
-  align-items: center; /* Center vertically */
-  background:#FBBC3B;
-  min-height:12.153vw;
+  justify-content: flex-end;
+  /* Align text to the right horizontally */
+  align-items: center;
+  /* Center vertically */
+  background: #FBBC3B;
+  min-height: 12.153vw;
 }
+
 .slogan h6 {
   text-align: right;
   color: #FBF7EB;
   font-style: normal;
   font-size: 3.33vw;
   font-weight: 700;
-  line-height: 1; /* Adjust the line height to control spacing between lines */
+  line-height: 1;
+  /* Adjust the line height to control spacing between lines */
 
-  margin-right:2.45vw;
+  margin-right: 2.45vw;
 }
 </style>

@@ -4,7 +4,7 @@
      <!-- <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div> -->
 
      <div class="recipies">
-         <Card v-for="card in recipiesArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" class="cards" />
+         <Card v-for="card in recipiesArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" class="cards" :user="user" />
      </div>
 
    </div>
@@ -22,6 +22,7 @@ export default {
   },
   props: {
     recipiesArray:Array,
+    user:Object,
     },
   data() {
     return {
@@ -34,12 +35,13 @@ export default {
         const index = this.recipiesArray.indexOf(card);
       
         this.recipiesArray[index].isFavorite=!this.recipiesArray[index].isFavorite;
+        console.log(this.recipiesArray)
       
         if(this.recipiesArray[index].isFavorite){
-          this.sendStateToBack('1','favorites',index);
+          this.sendStateToBack(this.user.username,'favorite',index);
         }
         else{
-          this.sendStateToBack('1','unfavorite',index);
+          this.sendStateToBack(this.user.username,'unfavorite',index);
         }
 
     },
@@ -47,6 +49,7 @@ export default {
       // console.log('http://localhost:8080/'+userId+'/'+favoriteState+'/'+recipeId);
       axios.put('http://localhost:8080/'+userId+'/'+favoriteState+'/'+recipeId)
               .then(response => {
+                console.log(response.data);
               })
               .catch(error => {
                 console.error('There was an error!', error);

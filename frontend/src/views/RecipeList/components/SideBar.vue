@@ -2,7 +2,7 @@
     <div class="side-bar">
         <div class="top">
             <h2>Filters</h2>
-            
+
             <button @click="clearAll">Clear All</button>
         </div>
         <hr id="bolder">
@@ -10,38 +10,44 @@
             <li>
                 <h3>Ratings</h3>
                 <hr>
-                <v-rating  v-model="rating" id="stars"  hover clearable size="2.1vw" @click="emitFilters"></v-rating>
+                <v-rating v-model="rating" id="stars" hover clearable size="2.1vw" @click="emitFilters"></v-rating>
             </li>
             <li>
                 <h3>Categories</h3>
                 <hr>
                 <div class="filter">
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Breakfast"  @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Breakfast"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Breakfast</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Lunch"  @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Lunch"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Lunch</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Dinner" @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Dinner"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Dinner</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Snacks" @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Snacks"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Snacks</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Dessert" @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Dessert"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Dessert</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Drinks" @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="categories" hide-details class="labels" value="Drinks"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Drinks</span>
                         </template>
@@ -52,33 +58,40 @@
                 <h3>Time</h3>
                 <hr>
                 <div class="filter" @click="emitFilters">
-                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="5 - 10 Mins" @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="5 - 10 Mins"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">5 - 10 Mins</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="10 - 30 Mins" @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="10 - 30 Mins"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">10 - 30 Mins</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="30 - 60 Mins" @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="30 - 60 Mins"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">30 - 60 Mins</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="+1 Hour" @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="time" hide-details class="labels" value="+1 Hour"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">+1 Hour</span>
                         </template>
                     </v-checkbox>
                 </div>
             </li>
-            <li>
+            <!-- show liked only if there is user -->
+
+            <li v-if="user">
                 <h3>Liked</h3>
                 <hr>
                 <div class="filter">
-                    <v-checkbox density="compact" v-model="liked" hide-details class="labels" value="Liked"  @click="emitFilters" >
+                    <v-checkbox density="compact" v-model="liked" hide-details class="labels" value="Liked"
+                        @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Show Liked Recipes</span>
                         </template>
@@ -90,117 +103,136 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      rating: 0,
-      categories: [],
-      time: [],
-      liked: false,
-    };
-  },
-  methods: {
-    clearAll() {
-        // console.log()
-      this.rating = 0;
-      this.categories = [];
-      this.time = [];
-      this.liked = false;
-      this.emitFilters();
+    data() {
+        return {
+            rating: 0,
+            categories: [],
+            time: [],
+            liked: false,
+        };
     },
-    emitFilters() {
-        setTimeout(() => {
-    //   console.log(JSON.stringify({ 
-    //     rating: this.rating,
-    //     categories: this.categories,
-    //     time: this.time,
-    //     liked: this.liked,
-    //   }, null, 2));
-      
-      this.$emit('filters-updated', {
-        rating: this.rating,
-        categories: this.categories,
-        time: this.time,
-        liked: this.liked,
-      });
-    }, 0);
-  },
-  },
+    methods: {
+        clearAll() {
+            // console.log()
+            this.rating = 0;
+            this.categories = [];
+            this.time = [];
+            this.liked = false;
+            this.emitFilters();
+        },
+        emitFilters() {
+            setTimeout(() => {
+                //   console.log(JSON.stringify({ 
+                //     rating: this.rating,
+                //     categories: this.categories,
+                //     time: this.time,
+                //     liked: this.liked,
+                //   }, null, 2));
+
+                this.$emit('filters-updated', {
+                    rating: this.rating,
+                    categories: this.categories,
+                    time: this.time,
+                    liked: this.liked,
+                });
+            }, 0);
+        },
+    },
+    props:{
+        user:{
+            type:Object,
+            required:true
+        }
+    }
 };
 </script>
 
 <style scoped>
 #stars {
     width: 10px;
-    margin-top:0.6vh;
+    margin-top: 0.6vh;
 }
+
 h2 {
     font-size: 2.223vw;
     font-weight: 700;
     margin: 0;
 }
+
 h3 {
     font-size: 1.3889vw;
     font-weight: 700;
     margin-top: 0.8727vh;
 }
+
 #bolder {
     border: 0.12vh solid #FBF7EB;
     margin-bottom: 1vh;
 }
+
 hr {
     margin-bottom: 0;
 }
+
 .side-bar {
-        display: flex;
-        flex-direction: column;
-        padding: 0 4vw;
-        /* flex-basis: 360px; */
-        flex-grow: 0;
-        flex-shrink: 0;
-        background-color: #E35733;
-        color: #FBF7EB;
-    }
-    .top {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-        align-items: center;
-        width: 100%;
-        /* margin-top: 76px; */
-        margin-top: 5.95vh;
-    }
-    button {
-        font-size: 1.111vw;
-    }
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    .labels {
-        color: #fbf7eb;
-        opacity: 3;
-        font-weight: 500;
-        height: 1.4vh;
-        font-size:1.1vw;
-        margin-bottom: 1.5vh;
-    }
-    .filter {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 1.80vh;
-        width: 17vw;
-    }
-    #stars {
-        width: 17vw;
-        margin-top: 0.6vh;
-        font-size: 1.2vw;
-    }
-   .lol {
-       font-size: 1.2vw;
-   }
-    /* ::v-deep .v-rating__wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0 4vw;
+    /* flex-basis: 360px; */
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: #E35733;
+    color: #FBF7EB;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    /* margin-top: 76px; */
+    margin-top: 5.95vh;
+}
+
+button {
+    font-size: 1.111vw;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.labels {
+    color: #fbf7eb;
+    opacity: 3;
+    font-weight: 500;
+    height: 1.4vh;
+    font-size: 1.1vw;
+    margin-bottom: 1.5vh;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.80vh;
+    width: 17vw;
+}
+
+#stars {
+    width: 17vw;
+    margin-top: 0.6vh;
+    font-size: 1.2vw;
+}
+
+.lol {
+    font-size: 1.2vw;
+}
+
+/* ::v-deep .v-rating__wrapper {
         width: 5vw;
       justify-content: space-around;
     }
@@ -280,5 +312,4 @@ hr {
         margin-bottom: 2.56vh;
     }
    
-   */
-</style>
+   */</style>
