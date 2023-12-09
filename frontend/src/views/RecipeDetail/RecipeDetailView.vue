@@ -3,8 +3,8 @@
   <div class="recipe-detail">
     <NavBar/>
     <div class="wrapper">
-      <RecipeInfo class="recipe-info"/>
-      <RecipeReview   class="recipe-review" />
+      <RecipeInfo :recipe="recipe" class="recipe-info"/>
+      <RecipeReview :recipe="recipe" :contributions="contributions" class="recipe-review" />
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       contributions: [],
-      recipes: [],
+      recipe: {},
     }
   },
   mounted() {
@@ -31,14 +31,15 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const contributions = await fetch('../../../data/contributions.json');
+        const contributions = await fetch("http://localhost:3001/contributions");
         this.contributions = await contributions.json(); 
       } catch (error) {
         console.error('Error fetching data:', error);
       }
       try {
-        const recipes = await fetch('../../../data/recipe.json');
-        this.recipes = await recipes.json();
+        const id = this.$route.params.id;
+        const recipe = await fetch("http://localhost:3001/recipes/${id}");
+        this.recipe = await recipe.json();
       } catch (error) { 
         console.error('Error fetching data:', error);
       }

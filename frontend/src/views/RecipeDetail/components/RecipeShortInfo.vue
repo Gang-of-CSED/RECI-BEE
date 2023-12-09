@@ -1,20 +1,20 @@
 <template>
     <div class="recipeShortInfo">
         <div class="recipe-name">
-            <h1>{{ recipe.name }}</h1>
+            <h1 v-html="recipe.name"></h1>
             <v-icon size="42" color="#E35733" id="heart" @click="toggleFavorite">
                 {{ recipe.isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}
             </v-icon>
         </div>
-    <p>{{ recipe.description }}</p>
+    <p v-html="recipe.description"></p>
     <div class="category-time">
         <div class="category">
             <h2>Categories:</h2>    
-            <p>{{ recipe.category }}</p>
+            <p v-html="recipe.category"></p>
         </div>
         <div class="time">
             <h2>Time:</h2>
-            <p>{{ recipe.time }}</p>
+            <p v-html="recipe.time"></p>
         </div>
     </div>
     <div class="rating">
