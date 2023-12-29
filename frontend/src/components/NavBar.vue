@@ -58,6 +58,15 @@
                             </div>
                         </form>
                     </div>
+                    <v-snackbar v-model="snackbar" :timeout="2000">
+                        Credentials are incorrect
+
+                        <template v-slot:actions>
+                            <v-btn color="blue" variant="text" @click="snackbar = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
 
                 </div>
             </li>
@@ -86,7 +95,8 @@ export default {
             loginForm: {
                 username: '',
                 password: ''
-            }
+            },
+            snackbar: false
 
         }
     },
@@ -148,7 +158,8 @@ export default {
                                 document.getElementById('Login').style.display = 'none';
                                 localStorage.setItem('token', data);
                                 this.$router.replace({ name: 'recipe-list' });
-                                this.$router.go();
+                                if(this.$route.name == 'recipe-list')
+                                    this.$router.go();
                             })
                     })
             }
@@ -179,7 +190,10 @@ export default {
                             document.getElementById('Login').style.display = 'none';
                             localStorage.setItem('token', data);
                             this.$router.push({ name: 'recipe-list' });
-                            this.$router.go();
+                            if(this.$route.name == 'recipe-list')
+                                this.$router.go();
+                        }else{
+                            this.snackbar = true
                         }
                     })
             }

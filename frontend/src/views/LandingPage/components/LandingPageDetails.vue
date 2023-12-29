@@ -16,7 +16,7 @@
                         </p>
                     </div>
                     <div class="btn1">
-                        <button class="catalogue">catalogue</button>
+                        <button class="catalogue" @click="$router.push('recipes')">catalogue</button>
                     </div>
                 </div>
                 <div class="img1">
@@ -35,8 +35,8 @@
                     and infuse your<br>kitchen with exciting flavors.
                 </p>
                 <div class="btns">
-                    <button class="rc">random recipe</button>
-                    <button class="rd">recipe of the day</button>
+                    <button class="rc" @click="$router.push(randomDishLink())">random recipe</button>
+                    <button class="rd" @click="$router.push('recipe/1')">recipe of the day</button>
                 </div>
             </div>
 
@@ -97,6 +97,15 @@
                             </div>
                         </form>
                     </div>
+                    <v-snackbar v-model="snackbar" :timeout="2000">
+                        Credentials are incorrect
+
+                        <template v-slot:actions>
+                            <v-btn color="blue" variant="text" @click="snackbar = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
                 </div>
             </div>
         </div>
@@ -125,7 +134,8 @@ export default {
             loginForm: {
                 username: '',
                 password: ''
-            }
+            },
+            snackbar: false
 
 
 
@@ -160,6 +170,10 @@ export default {
 
     },
     methods: {
+        randomDishLink() {
+            const randomRecipeNumber = Math.floor(Math.random() * 30);
+            return `/recipe/${randomRecipeNumber}`;
+        },
         async handleSignUp(e) {
             e.preventDefault();
             console.log(this.signupForm)
@@ -199,7 +213,6 @@ export default {
                                 document.getElementById('Login').style.display = 'none';
                                 localStorage.setItem('token', data);
                                 this.$router.replace({ name: 'recipe-list' });
-                                this.$router.go();
                             })
                     })
             }
@@ -230,7 +243,8 @@ export default {
                             document.getElementById('Login').style.display = 'none';
                             localStorage.setItem('token', data);
                             this.$router.push({ name: 'recipe-list' });
-                            this.$router.go();
+                        }else{
+                            this.snackbar = true
                         }
                     })
             }
@@ -616,4 +630,5 @@ input[type=password] {
     to {
         transform: scale(1)
     }
-}</style>
+}
+</style>
