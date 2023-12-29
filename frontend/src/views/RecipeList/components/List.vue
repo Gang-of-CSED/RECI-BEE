@@ -4,7 +4,7 @@
      <!-- <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div> -->
 
      <div class="recipies">
-         <Card v-for="card in recipiesArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" class="cards" :user="user" />
+         <Card v-for="card in recipiesArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" @toggle-save="toggleSave" class="cards" :user="user" />
      </div>
 
    </div>
@@ -44,6 +44,19 @@ export default {
           this.sendStateToBack(this.user.username,'unfavorite',index);
         }
 
+    },
+    toggleSave(card) {
+      const index = this.recipiesArray.indexOf(card);
+    
+      this.recipiesArray[index].isSave=!this.recipiesArray[index].isSave;
+      console.log(this.recipiesArray)
+    
+      if(this.recipiesArray[index].isSave){
+        this.sendStateToBack(this.user.username,'save',index);
+      }
+      else{
+        this.sendStateToBack(this.user.username,'unsave',index);
+      }
     },
     sendStateToBack(userId,favoriteState,recipeId){
       // console.log('http://localhost:8080/'+userId+'/'+favoriteState+'/'+recipeId);
