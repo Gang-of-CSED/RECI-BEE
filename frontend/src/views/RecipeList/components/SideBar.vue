@@ -13,6 +13,49 @@
                 <v-rating v-model="rating" id="stars" hover clearable size="2.1vw" @click="emitFilters"></v-rating>
             </li>
             <li>
+                <h3>Cuisines</h3>
+                <hr>
+                <div class="filter">
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Breakfast"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Arabian</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Lunch"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">European</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Dinner"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">American</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Snacks"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Mexican </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Dessert"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Japanese </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Dessert"
+                    @click="emitFilters">
+                    <template v-slot:label>
+                            <span class="lol">Chinese</span>
+                        </template>
+                    </v-checkbox>
+             
+                </div>
+            </li>
+            <li>
                 <h3>Categories</h3>
                 <hr>
                 <div class="filter">
@@ -50,6 +93,78 @@
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Drinks</span>
+                        </template>
+                    </v-checkbox>
+                </div>
+            </li>
+            <li>
+                <h3>Diet</h3>
+                <hr>
+                <div class="filter" @click="emitFilters">
+                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Keto"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Keto </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Suger free"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Suger free </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Vegetarian"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Vegetarian</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="vegan"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">vegan</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Gluten free"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Gluten free</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Lactose free"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Lactose free</span>
+                        </template>
+                    </v-checkbox>
+                </div>
+            </li>
+            <li>
+                <h3>Calories</h3>
+                <hr>
+                <div class="filter" @click="emitFilters">
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="5 - 10 Mins"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">1 - 50 </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="10 - 30 Mins"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">50 - 150 </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="30 - 60 Mins"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">150 - 300</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="+1 Hour"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">+300</span>
                         </template>
                     </v-checkbox>
                 </div>
@@ -98,6 +213,18 @@
                     </v-checkbox>
                 </div>
             </li>
+            <li v-if="user">
+                <h3>Saved</h3>
+                <hr>
+                <div class="filter">
+                    <v-checkbox density="compact" v-model="saved" hide-details class="labels" value="Saved"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Show Saved Recipes</span>
+                        </template>
+                    </v-checkbox>
+                </div>
+            </li>
         </ul>
     </div>
 </template>
@@ -107,8 +234,12 @@ export default {
         return {
             rating: 0,
             categories: [],
+            cuisines: [],
+            calories: [],
+            diet: [],
             time: [],
             liked: false,
+            saved:false
         };
     },
     methods: {
@@ -116,8 +247,12 @@ export default {
             // console.log()
             this.rating = 0;
             this.categories = [];
+            this.cuisines = [];
+            this.diet = [];
+            this.calories = [];
             this.time = [];
             this.liked = false;
+            this.saved = false;
             this.emitFilters();
         },
         emitFilters() {
@@ -132,8 +267,12 @@ export default {
                 this.$emit('filters-updated', {
                     rating: this.rating,
                     categories: this.categories,
+                    cuisines: this.cuisines,
+                    calories: this.calories,
+                    diet: this.deit,
                     time: this.time,
                     liked: this.liked,
+                    saved: this.saved,
                 });
             }, 0);
         },
