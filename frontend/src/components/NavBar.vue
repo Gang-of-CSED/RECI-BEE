@@ -59,7 +59,7 @@
                         </form>
                     </div>
                     <v-snackbar v-model="snackbar" :timeout="2000">
-                        Credentials are incorrect
+                        {{snackbarText}}
 
                         <template v-slot:actions>
                             <v-btn color="blue" variant="text" @click="snackbar = false">
@@ -96,7 +96,8 @@ export default {
                 username: '',
                 password: ''
             },
-            snackbar: false
+            snackbar: false,
+            snackbarText: ''
 
         }
     },
@@ -138,8 +139,14 @@ export default {
                 })
                     .then(response => response.json())
                     .then((data) => {
-                        console.log(data)
+                        console.log("Dataaaa",data)
                         document.getElementById('Signup').style.display = 'none';
+                        if (!data) {
+                            this.snackbar = true
+                            this.snackbarText = "Username already exists"
+                            return
+                        }
+                        
                         fetch(`http://localhost:8080/login`, {
                             method: 'POST',
                             // send data as form not as stringified JSON
@@ -161,6 +168,9 @@ export default {
                                 if(this.$route.name == 'recipe-list')
                                     this.$router.go();
                             })
+                    }).catch(err => {
+                        this.snackbar = true
+                        this.snackbarText = "Username already exists"
                     })
             }
         },
@@ -194,6 +204,7 @@ export default {
                                 this.$router.go();
                         }else{
                             this.snackbar = true
+                            this.snackbarText = "Wrong username or password"
                         }
                     })
             }
