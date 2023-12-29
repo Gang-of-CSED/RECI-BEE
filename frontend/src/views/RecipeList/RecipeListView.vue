@@ -26,6 +26,7 @@ import { ref, onMounted } from 'vue';
 const allRecipes = ref([]);
 const fltRecipes = ref([]);
 const userFavorites = ref([]);
+const userSaves = ref([]);
 const user = ref(null);
 
 
@@ -53,13 +54,14 @@ const filterRecipes = (selected) => {
       : true;
 
     const isLiked = selected.liked ? recipe.isFavorite : true;
+    const isSaved = selected.saved ? recipe.isSave : true;
 
     // console.log("reciperating",recipe.rate)
     // console.log("selectedrating",selected.rating)
 
     const ratingMatch = selected.rating === 0 || parseInt(recipe.rate) == parseInt(selected.rating);
 
-    return categoryMatch && timeMatch && isLiked && ratingMatch;
+    return categoryMatch && timeMatch && isLiked && ratingMatch && isSaved;
   });
 
   //   console.log(JSON.stringify(fltRecipes.value, null, 2));
@@ -79,6 +81,7 @@ onMounted(() => {
         console.log(data);
         user.value = data;
         fetchUserFavorite();
+        fetchUserSaved();
       })
 
   }
@@ -115,6 +118,18 @@ const fetchUserFavorite = () => {
     });
 };
 
+const fetchUserSaved = () =>{
+  let userId = user.value?.username;
+  axios.get('http://localhost:8080/' + userId + '/saves')
+    .then(response => {
+      userSaves.value = response.data;
+      matchSaves();
+    })
+    .catch(error => {
+      console.error('There was an error!', error);
+
+    });
+};
 
 //dummy fetching for testing 
 // const dummyfetch=()=>{
@@ -143,6 +158,18 @@ const matchFavorites = () => {
   //  console.log(JSON.stringify(fltRecipes.value,null, 2));
 
 };
+
+const matchSaves = () => {
+  allRecipes.value = allRecipes.value.map(recipe => {
+    console.log(userSaves.value)
+    const isSave = userSaves.value.saves.some(save => save === recipe.id);
+    return { ...recipe, isSave };
+  });
+  fltRecipes.value = allRecipes.value;
+  //  console.log(JSON.stringify(fltRecipes.value,null, 2));
+
+};
+
 
 
 </script>

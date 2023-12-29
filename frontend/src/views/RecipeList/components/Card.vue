@@ -13,8 +13,11 @@
      <div class="recipefooter">
 
         <div class="recipeName" v-html="cardData.name" > </div>  
+        <v-icon v-if="user" size="20" color="#312525" @click="toggleSave" >
+                {{ cardData.isSave ? 'mdi-bookmark' : 'mdi-bookmark-outline' }}
+            </v-icon>
          <img v-if="user" class="heart" :src="cardData.isFavorite ? favPath : notFavPath" alt="Heart" @click="toggleFavorite" />
-  
+         
      </div>
 
   </div>
@@ -47,6 +50,11 @@ export default {
       toggleFavorite() {
         event.stopPropagation();
         this.$emit('toggle-favorite', this.cardData);
+        // console.log(this.cardData);
+      },
+      toggleSave() {
+        event.stopPropagation();
+        this.$emit('toggle-save', this.cardData);
         // console.log(this.cardData);
       },
 
