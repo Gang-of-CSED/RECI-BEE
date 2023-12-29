@@ -1,13 +1,13 @@
 <template>
     <div class="navbar">
         <div>
-            <h1>RECI-BEE</h1>
+            <a href="/home"><h1>RECI-BEE</h1></a>
         </div>
         <ul>
-            <li><a href="#">Browse Catalogue</a></li>
-            <li><a href="#">Dish Of The Day</a></li>
-            <li><a href="#">Random Dish</a></li>
-            <li><a href="#">About Us</a></li>
+            <li><a href="/recipes">Browse Catalogue</a></li>
+            <li><a href="/recipe/1">Dish Of The Day</a></li>
+            <li><a :href="randomDishLink()">Random Dish</a></li>
+            <li><a href="/home">About Us</a></li>
             <li>
                 <h3 v-if="logged">{{ username }}</h3>
                 <div v-else class="log">
@@ -105,7 +105,10 @@ export default {
         }
     },
     methods: {
-
+        randomDishLink() {
+            const randomRecipeNumber = Math.floor(Math.random() * 30);
+            return `/recipe/${randomRecipeNumber}`;
+        },
         async handleSignUp(e) {
             e.preventDefault();
             console.log(this.signupForm)
