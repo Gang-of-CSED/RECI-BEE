@@ -10,6 +10,7 @@
         <List :recipiesArray="fltRecipes" :user="user" />
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import axios from 'axios';
 import NavBar from '../../components/NavBar.vue';
 import SideBar from './components/SideBar.vue';
 import List from './components/List.vue';
+import Footer from '../../components/Footer.vue';
 import { ref, onMounted } from 'vue';
 
 

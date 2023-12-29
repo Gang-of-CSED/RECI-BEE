@@ -6,6 +6,7 @@
       <RecipeInfo :recipe="recipe" class="recipe-info"/>
       <RecipeReview :recipe="recipe"  class="recipe-review" />
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -13,11 +14,13 @@
 import NavBar from '../../components/NavBar.vue';
 import RecipeInfo from './components/RecipeInfo.vue';
 import RecipeReview from './components/RecipeReview.vue';
+import Footer from '../../components/Footer.vue';
 export default {
   components: {
     NavBar,
     RecipeInfo,
     RecipeReview,
+    Footer,
   },
   data() {
     return {
