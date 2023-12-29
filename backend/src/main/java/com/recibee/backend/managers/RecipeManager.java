@@ -61,19 +61,19 @@ public class RecipeManager {
 
     public void addRecipe(String name, String description, String ingredients, String[] categories, int time,
             String steps, Double rate,
-            String imagePath) {
+            String imagePath, String cuisine, int calories, String[] diet) {
         int id = recipes.size();
         RecipeModel recipe = new RecipeModel(id, name, description, ingredients, categories, time, steps, rate,
-                imagePath);
+                imagePath, cuisine, calories, diet);
         recipes.put(id, recipe);
     }
 
     public void updateRecipe(int id, String name, String description, String ingredients, String[] categories, int time,
             String steps,
             Double rate,
-            String imagePath) {
+            String imagePath, String cuisine, int calories, String[] diet) {
         RecipeModel recipe = new RecipeModel(id, name, description, ingredients, categories, time, steps, rate,
-                imagePath);
+                imagePath, cuisine, calories, diet);
         recipes.put(id, recipe);
     }
 

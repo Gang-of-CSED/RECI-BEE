@@ -3,6 +3,10 @@ package com.recibee.backend.models;
 import java.util.Map;
 
 import com.recibee.backend.managers.RecipeManager;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecipeModel {
     int id;
@@ -14,6 +18,9 @@ public class RecipeModel {
     String steps;
     Double rate;
     String cover;
+    String cuisine;
+    int calories;
+    String[] diet;
 
     public RecipeModel() {
 
@@ -22,7 +29,10 @@ public class RecipeModel {
     public RecipeModel(int id, String name, String decription, String ingredients, String[] categories, int time,
             String steps,
             Double rate,
-            String imagePath) {
+            String imagePath,
+            String cuisine,
+            int calories,
+            String[] diet) {
         this.id = id;
         this.name = name;
         this.description = decription;
@@ -32,6 +42,9 @@ public class RecipeModel {
         this.steps = steps;
         this.rate = rate;
         this.cover = imagePath;
+        this.cuisine = cuisine;
+        this.calories = calories;
+        this.diet = diet;
         // this.cover = RecipeManager.getInstance().encodedImageToBase64(imagePath);
     }
 
@@ -107,16 +120,47 @@ public class RecipeModel {
         this.cover = cover;
     }
 
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public void setCuisine(String cuisine) {
+        this.cuisine= cuisine;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories= calories;
+    }
+
+    public String[] getDiet() {
+        return diet;
+    }
+
+    public void setDiet(String[] diet) {
+        this.diet= diet;
+    }
+    
+
+    
+
     public Map<String, Object> toMap() {
-        return Map.of(
-                "id", id,
-                "name", name,
-                "description", description,
-                "ingredients", ingredients,
-                "categories", categories,
-                "time", time,
-                "steps", steps,
-                "rate", rate,
-                "cover", cover);
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("name", name);
+        map.put("description", description);
+        map.put("ingredients", ingredients);
+        map.put("categories", categories);
+        map.put("time", time);
+        map.put("steps", steps);
+        map.put("rate", rate);
+        map.put("cover", cover);
+        map.put("cuisine", cuisine);
+        map.put("calories", calories);
+        map.put("diet", diet);
+        return map;
     }
 }
