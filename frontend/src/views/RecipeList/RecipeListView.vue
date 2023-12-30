@@ -27,37 +27,15 @@ import { ref, onMounted } from 'vue';
 
 const allRecipes = ref([]);
 const fltRecipes = ref([]);
+const filterCriterias = ref([]);
 const userFavorites = ref([]);
 const userSaves = ref([]);
 const user = ref(null);
 
 
 const filterRecipes = (selected) => {
-    
-  // if (searchWord && searchLogic) {
-
-  //     const searchWords = searchWord.toLowerCase().split(/,|\s+/).filter(Boolean); // Split by comma or space and remove empty strings
-
-  //     fltRecipes.value = allRecipes.value.filter(recipe => {
-  //       if (searchLogic === 'name') {
-  //         return recipe.name.toLowerCase().includes(searchWord.toLowerCase());
-  //       } else if (searchLogic === 'ingredients') {
-  //         const recipeIngredients = recipe.ingredients.toLowerCase().replace(/<\/?p>/g, '').split(/,|\s+/).map(ingredient => ingredient.trim());
-
-  //           return searchWords.every(searchIngredient =>
-  //               recipeIngredients.some(recipeIngredient => 
-  //                   recipeIngredient.includes(searchIngredient)
-  //         )
-  //         );
-  //       }
-
-  //   });
-  // }
-  // else if(searchWord=="" && searchLogic==""){
-  //   fltRecipes.value=allRecipes.value
-  // };
-
-  // if(selected!=null){
+    filterCriterias.value=selected;
+  
     const timeToMinutes = (time) => {
       if (time === "5 - 10 Mins") return [5, 10];
       if (time === "10 - 30 Mins") return [10, 30];
@@ -108,12 +86,14 @@ const filterRecipes = (selected) => {
       const ratingMatch = selected.rating === 0 || parseInt(recipe.rate) == parseInt(selected.rating);
 
       return categoryMatch && timeMatch && isLiked && ratingMatch&& isSaved && calorieMatch && cuisineMatch && dietMatch;
-    // });
+    
   }
 
 
-
-  )};
+  
+  )
+  return fltRecipes;
+ };
 
 
 const sortRecipes = (sortLogic) => {
@@ -137,11 +117,13 @@ const sortRecipes = (sortLogic) => {
 
 const searchRecipes = (searchWord, searchLogic) => {
 
-  if (!searchWord || !searchLogic) return;
-
+  if (!searchWord || !searchLogic){ 
+    filterRecipes(filterCriterias.value);
+    return ;
+  }
   const searchWords = searchWord.toLowerCase().split(/,|\s+/).filter(Boolean); // Split by comma or space and remove empty strings
-
-      fltRecipes.value = allRecipes.value.filter(recipe => {
+    console.log("flag")
+      fltRecipes.value = filterRecipes(filterCriterias.value).value.filter(recipe => {
         if (searchLogic === 'name') {
           return recipe.name.toLowerCase().includes(searchWord.toLowerCase());
         } else if (searchLogic === 'ingredients') {
