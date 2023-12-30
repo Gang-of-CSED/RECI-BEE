@@ -7,6 +7,7 @@
         <div class="slogan">
           <h6>Unlock The<br>Flavors Of The World</h6>
         </div>
+      <SearchBar @sort-event="sortRecipes" @search-event="searchRecipes"/>
         <List :recipiesArray="fltRecipes" :user="user" />
       </div>
     </div>
@@ -18,6 +19,7 @@
 import axios from 'axios';
 import NavBar from '../../components/NavBar.vue';
 import SideBar from './components/SideBar.vue';
+import SearchBar from './components/SearchBar.vue';
 import List from './components/List.vue';
 import Footer from '../../components/Footer.vue';
 import { ref, onMounted } from 'vue';
@@ -25,49 +27,117 @@ import { ref, onMounted } from 'vue';
 
 const allRecipes = ref([]);
 const fltRecipes = ref([]);
+const filterCriterias = ref([]);
 const userFavorites = ref([]);
 const userSaves = ref([]);
 const user = ref(null);
 
 
 const filterRecipes = (selected) => {
-  // Helper function to convert time string to a comparable number (minutes)
-  const timeToMinutes = (time) => {
-    if (time === "5 - 10 Mins") return [5, 10];
-    if (time === "10 - 30 Mins") return [10, 30];
-    if (time === "30 - 60 Mins") return [30, 60];
-    if (time === "+1 Hour") return [61, Infinity];
-    return [0, 0];
+    filterCriterias.value=selected;
+  
+    const timeToMinutes = (time) => {
+      if (time === "5 - 10 Mins") return [5, 10];
+      if (time === "10 - 30 Mins") return [10, 30];
+      if (time === "30 - 60 Mins") return [30, 60];
+      if (time === "+1 Hour") return [61, Infinity];
+      return [0, 0];
+    };
+    const calorieToRange = (calorie) => {
+      if (calorie === "1 - 50") return [1, 50];
+      if (calorie === "50 - 150") return [50, 150];
+      if (calorie === "150 - 300") return [150, 300];
+      if (calorie === "+300") return [301, Infinity];
+      return [0, 0];
+    };
+
+    const selectedTimeRanges = selected.time && selected.time.length > 0 ? selected.time.map(t => timeToMinutes(t)) : null;
+    const selectedCaloriesRanges = selected.calories && selected.calories.length > 0 ? selected.calories.map(t => calorieToRange(t)) : null;
+
+    fltRecipes.value = allRecipes.value.filter(recipe => {
+   
+
+      const categoryMatch = selected.categories && selected.categories.length > 0
+        ? recipe.categories.some(category => selected.categories.includes(category))
+        : true;
+        const dietMatch = selected.diets && selected.diets.length > 0
+        ? recipe.diet.some(diet => selected.diets.includes(diet))
+        : true;
+        
+        const cuisineMatch = selected.cuisines && selected.cuisines.length > 0
+        ? selected.cuisines.includes(recipe.cuisine)
+        : true; 
+
+
+      const timeMatch = selectedTimeRanges
+        ? selectedTimeRanges.some(([min, max]) => recipe.time >= min && recipe.time <= max)
+        : true;
+
+      const calorieMatch = selectedCaloriesRanges
+        ? selectedCaloriesRanges.some(([min, max]) => recipe.calories >= min && recipe.calories <= max)
+        : true;
+
+      const isLiked = selected.liked ? recipe.isFavorite : true;
+      const isSaved = selected.saved ? recipe.isFavorite : true;
+
+
+    
+
+      const ratingMatch = selected.rating === 0 || parseInt(recipe.rate) == parseInt(selected.rating);
+
+      return categoryMatch && timeMatch && isLiked && ratingMatch&& isSaved && calorieMatch && cuisineMatch && dietMatch;
+    
+  }
+
+
+  
+  )
+  return fltRecipes;
+ };
+
+
+const sortRecipes = (sortLogic) => {
+  const compare = (a, b) => {
+    switch (sortLogic) {
+      case 'time':
+        return a.time - b.time;
+      case 'rate':
+        
+        return b.rate - a.rate;
+      case 'calories':
+        return a.calories - b.calories;
+      default:
+       
+        return 0;
+    }
   };
 
-  const selectedTimeRanges = selected.time && selected.time.length > 0 ? selected.time.map(t => timeToMinutes(t)) : null;
-
-
-  fltRecipes.value = allRecipes.value.filter(recipe => {
-
-    const categoryMatch = selected.categories && selected.categories.length > 0
-      ? recipe.categories.some(category => selected.categories.includes(category))
-      : true;
-
-    const timeMatch = selectedTimeRanges
-      ? selectedTimeRanges.some(([min, max]) => recipe.time >= min && recipe.time <= max)
-      : true;
-
-    const isLiked = selected.liked ? recipe.isFavorite : true;
-    const isSaved = selected.saved ? recipe.isSave : true;
-
-    // console.log("reciperating",recipe.rate)
-    // console.log("selectedrating",selected.rating)
-
-    const ratingMatch = selected.rating === 0 || parseInt(recipe.rate) == parseInt(selected.rating);
-
-    return categoryMatch && timeMatch && isLiked && ratingMatch && isSaved;
-  });
-
-  //   console.log(JSON.stringify(fltRecipes.value, null, 2));
-  return fltRecipes.value;
+  fltRecipes.value.sort(compare);
 };
 
+const searchRecipes = (searchWord, searchLogic) => {
+
+  if (!searchWord || !searchLogic){ 
+    filterRecipes(filterCriterias.value);
+    return ;
+  }
+  const searchWords = searchWord.toLowerCase().split(/,|\s+/).filter(Boolean); // Split by comma or space and remove empty strings
+    console.log("flag")
+      fltRecipes.value = filterRecipes(filterCriterias.value).value.filter(recipe => {
+        if (searchLogic === 'name') {
+          return recipe.name.toLowerCase().includes(searchWord.toLowerCase());
+        } else if (searchLogic === 'ingredients') {
+          const recipeIngredients = recipe.ingredients.toLowerCase().replace(/<\/?p>/g, '').split(/,|\s+/).map(ingredient => ingredient.trim());
+
+            return searchWords.every(searchIngredient =>
+                recipeIngredients.some(recipeIngredient => 
+                    recipeIngredient.includes(searchIngredient)
+          )
+          );
+        }
+
+    });
+};
 onMounted(() => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -96,7 +166,7 @@ const fetchAllRecipes = () => {
       allRecipes.value = response.data;
       fltRecipes.value = response.data;
       //  console.log(JSON.stringify(allRecipes.value,null, 2));
-
+     
       // resolve(response.data);
     })
     .catch(error => {

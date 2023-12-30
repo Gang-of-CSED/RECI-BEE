@@ -13,6 +13,38 @@
                 <v-rating v-model="rating" id="stars" hover clearable size="2.1vw" @click="emitFilters"></v-rating>
             </li>
             <li>
+                <h3>Cuisines</h3>
+                <hr>
+                <div class="filter">
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Arabian"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Arabian</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="European"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">European</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="American"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">American</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Asian"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Asian </span>
+                        </template>
+                    </v-checkbox>
+                   
+             
+                </div>
+            </li>
+            <li>
                 <h3>Categories</h3>
                 <hr>
                 <div class="filter">
@@ -50,6 +82,61 @@
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Drinks</span>
+                        </template>
+                    </v-checkbox>
+                </div>
+            </li>
+            <li>
+                <h3>Diet</h3>
+                <hr>
+                <div class="filter" @click="emitFilters">
+                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Keto"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Keto </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Sugar-free"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Sugar-free </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Vegetarian"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Vegetarian</span>
+                        </template>
+                    </v-checkbox>
+                   
+                </div>
+            </li>
+            <li>
+                <h3>Calories</h3>
+                <hr>
+                <div class="filter" @click="emitFilters">
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="1 - 50"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">1 - 50 </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="50 - 150"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">50 - 150 </span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="150 - 300"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">150 - 300</span>
+                        </template>
+                    </v-checkbox>
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="+300"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">+300</span>
                         </template>
                     </v-checkbox>
                 </div>
@@ -105,6 +192,18 @@
                     </v-checkbox>
                 </div>
             </li>
+            <!-- <li v-if="user">
+                <h3>Saved</h3>
+                <hr>
+                <div class="filter">
+                    <v-checkbox density="compact" v-model="saved" hide-details class="labels" value="Saved"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Show Saved Recipes</span>
+                        </template>
+                    </v-checkbox>
+                </div>
+            </li> -->
         </ul>
     </div>
 </template>
@@ -114,9 +213,11 @@ export default {
         return {
             rating: 0,
             categories: [],
+            cuisines: [],
+            calories: [],
+            diets: [],
             time: [],
             liked: false,
-            saved: false,
         };
     },
     methods: {
@@ -124,8 +225,12 @@ export default {
             // console.log()
             this.rating = 0;
             this.categories = [];
+            this.cuisines = [];
+            this.diets = [];
+            this.calories = [];
             this.time = [];
             this.liked = false;
+            this.saved = false;
             this.emitFilters();
         },
         emitFilters() {
@@ -140,11 +245,13 @@ export default {
                 this.$emit('filters-updated', {
                     rating: this.rating,
                     categories: this.categories,
+                    cuisines: this.cuisines,
+                    calories: this.calories,
+                    diets: this.diets,
                     time: this.time,
                     liked: this.liked,
-                    saved: this.saved,
                 });
-            }, 0);
+            },0);
         },
     },
     props:{
