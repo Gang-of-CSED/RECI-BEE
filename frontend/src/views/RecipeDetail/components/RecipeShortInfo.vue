@@ -18,9 +18,21 @@
             <h2>Categories:</h2>    
             <p v-for="category in recipe.categories" class="category"> {{ category }}</p>
         </div>
+        <div>
+            <h2>Cuisine:</h2>
+            <p>{{ recipe.cuisine }}</p>
+        </div>
+        <div class="time">
+            <h2>Diet:</h2>
+            <p v-for="d in recipe.diet" class="category"> {{ d }}</p>
+        </div>
         <div class="time">
             <h2>Time:</h2>
             <p v-html="recipe.time"></p>
+        </div>
+        <div  class="time">
+            <h2>Calories:</h2>
+            <p v-html="recipe.calories"></p>
         </div>
     </div>
     <div class="rating">
@@ -46,6 +58,7 @@ export default {
     },
     mounted(){
         const token = localStorage.getItem('token');
+        console.log("recipe",this.recipe)
         if(token){
             fetch("http://localhost:8080/info", {
                 headers: {
@@ -122,7 +135,7 @@ export default {
         justify-content: space-between;
     }
     .time {
-        margin-right: 50%;
+        /* margin-right: 50%; */
     } 
     .rating h2{
         margin-bottom: 0;

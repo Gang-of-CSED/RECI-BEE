@@ -36,6 +36,7 @@ export default {
       try {
         const recipe = await fetch(`http://localhost:8080/recipe/${id}`);
         this.recipe = await recipe.json();
+        console.log("this.recipe",this.recipe);
       } catch (error) { 
         console.error('Error fetching data:', error);
       }
