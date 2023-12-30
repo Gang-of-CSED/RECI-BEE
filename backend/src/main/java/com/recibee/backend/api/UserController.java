@@ -2,7 +2,6 @@ package com.recibee.backend.api;
 
 import java.time.temporal.ChronoUnit;
 
-import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +29,8 @@ public class UserController {
                 System.out.println(requser.getPassword());
 
         UserModel user = UserManager.getInstance().getUser(requser.getUsername());
-        if (user != null && user.getPassword().equals(requser.getPassword())) {
+        String hashedPassword = Auth.hashString(requser.getPassword());
+        if (user != null && user.getPassword().equals(hashedPassword)) {
             // generate jwt from user.getUsername()
             String jwtToken = Auth.getToken(requser.getUsername());
                     System.out.println("logged in");
@@ -45,8 +45,13 @@ public class UserController {
         System.out.println("register");
         if (user.getUsername()== null || user.getPassword() == null || user.getName() == null)
             return null;
-        System.out.println("registered");
-        user = new UserModel(user.getUsername(), user.getPassword(), user.getName());
+        
+        UserModel checkUser = UserManager.getInstance().getUser(user.getUsername());
+        if (checkUser != null)
+            return null;
+        String hashedPassword = Auth.hashString(user.getPassword());
+        
+        user = new UserModel(user.getUsername(), hashedPassword, user.getName());
         UserManager.getInstance().addUser(user);
         return user;
     }

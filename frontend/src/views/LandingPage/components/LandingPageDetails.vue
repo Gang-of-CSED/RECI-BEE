@@ -16,7 +16,7 @@
                         </p>
                     </div>
                     <div class="btn1">
-                        <button class="catalogue">catalogue</button>
+                        <button class="catalogue" @click="$router.push('recipes')">catalogue</button>
                     </div>
                 </div>
                 <div class="img1">
@@ -35,8 +35,8 @@
                     and infuse your<br>kitchen with exciting flavors.
                 </p>
                 <div class="btns">
-                    <button class="rc">random recipe</button>
-                    <button class="rd">recipe of the day</button>
+                    <button class="rc" @click="$router.push(randomDishLink())">random recipe</button>
+                    <button class="rd" @click="$router.push('recipe/1')">recipe of the day</button>
                 </div>
             </div>
 
@@ -52,34 +52,60 @@
                 <div class="btns1">
                     <button class="login" onclick="document.getElementById('Login').style.display='block'">LOG IN</button>
                     <div id="Login" class="formC">
-                        <form class="formC-content animate" action="/login" method="post">
+                        <form class="formC-content animate">
                             <div class="container">
                                 <p>sign In</p>
-                                <input v-model="loginForm.username" class="text" type="text" placeholder="username/email"
+                                <input v-model="loginForm.username" class="text" type="text" placeholder="username"
                                     name="username" required>
+                                <div class="input-errors" v-for="error of v$.loginForm.username.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
                                 <input v-model="loginForm.password" class="psw" type="password" placeholder="password"
                                     name="psw" required>
-                                <button class="sbt"  @click="handleLogIn">Enter</button>
+                                <div class="input-errors" v-for="error of v$.loginForm.password.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
+                                <button class="sbt" @click="handleLogIn">Enter</button>
                             </div>
                         </form>
                     </div>
+
                     <button class="signup" onclick="document.getElementById('Signup').style.display='block'">SIGN
                         UP</button>
                     <div id="Signup" class="formC">
                         <form class="formC-content2 animate">
                             <div class="container">
                                 <p>sign Up</p>
+
                                 <input v-model="signupForm.username" class="text" type="text" placeholder="username"
                                     name="username" required>
+                                <div class="input-errors" v-for="error of v$.signupForm.username.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
                                 <input v-model="signupForm.name" class="text" type="text" placeholder="name" name="name"
                                     required>
+                                <div class="input-errors" v-for="error of v$.signupForm.name.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
                                 <input v-model="signupForm.password" class="psw" type="password" placeholder="password"
                                     name="psw" required>
+                                <div class="input-errors" v-for="error of v$.signupForm.password.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
                                 <!-- <input class="psw" type="password" placeholder="confirm password" name="cpsw" required> -->
-                                <button class="sbt"  @click="handleSignUp">Enter</button>
+                                <button class="sbt" @click="handleSignUp">Enter</button>
                             </div>
                         </form>
                     </div>
+                    <v-snackbar v-model="snackbar" :timeout="2000">
+                        {{snackbarText}}
+
+                        <template v-slot:actions>
+                            <v-btn color="blue" variant="text" @click="snackbar = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
                 </div>
             </div>
         </div>
@@ -87,7 +113,12 @@
 </template>
 
 <script>
+import { useVuelidate } from '@vuelidate/core'
+import { required, minLength, maxLength, alpha, alphaNum } from '@vuelidate/validators'
 export default {
+    setup() {
+        return { v$: useVuelidate() }
+    },
     data() {
         return {
             imageSrc1: require('@/assets/p1.png'),
@@ -103,11 +134,27 @@ export default {
             loginForm: {
                 username: '',
                 password: ''
-            }
+            },
+            snackbar: false,
+            snackbarText: ''
 
 
 
         };
+    },
+    validations() {
+        return {
+            signupForm: {
+                username: { required, minLength: minLength(3), maxLength: maxLength(16), alphaNum },
+                name: { required, minLength: minLength(3), maxLength: maxLength(16), alpha },
+                password: { required, minLength: minLength(8), maxLength: maxLength(16) },
+                // cpassword: { required }
+            },
+            loginForm: {
+                username: { required, minLength: minLength(3), maxLength: maxLength(16), alphaNum },
+                password: { required, minLength: minLength(8), maxLength: maxLength(16) },
+            }
+        }
     },
     mounted() {
         var formC = document.getElementById('Login');
@@ -124,47 +171,93 @@ export default {
 
     },
     methods: {
-        handleSignUp(e) {
+        randomDishLink() {
+            const randomRecipeNumber = Math.floor(Math.random() * 30);
+            return `/recipe/${randomRecipeNumber}`;
+        },
+        async handleSignUp(e) {
             e.preventDefault();
             console.log(this.signupForm)
-            fetch(`http://localhost:8080/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: this.signupForm.username,
-                    name: this.signupForm.name,
-                    password: this.signupForm.password,
-                }),
-            })
-                .then(response => response.json())
-                .then((data) => {
-                    console.log(data)
-                    document.getElementById('Signup').style.display = 'none';
+            const result = await this.v$.signupForm.$validate()
+            console.log("result", result);
+            if (result) {
+                fetch(`http://localhost:8080/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: this.signupForm.username,
+                        name: this.signupForm.name,
+                        password: this.signupForm.password,
+                    }),
                 })
-        },
-        handleLogIn(e) {
-            e.preventDefault();
-            fetch(`http://localhost:8080/login`, {
-                method: 'POST',
-                // send data as form not as stringified JSON
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: this.loginForm.username,
-                    password: this.loginForm.password,
-                }), // body data type must match "Content-Type" header
+                    .then(response => response.json())
+                    .then((data) => {
+                        console.log(data)
+                        document.getElementById('Signup').style.display = 'none';
+                        if (!data) {
+                            this.snackbar = true
+                            this.snackbarText = "Username already exists"
+                            return
+                        }
+                        
+                        fetch(`http://localhost:8080/login`, {
+                            method: 'POST',
+                            // send data as form not as stringified JSON
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                username: this.signupForm.username,
+                                password: this.signupForm.password,
+                            }), // body data type must match "Content-Type" header
 
-            })
-                .then(response => response.text())
-                .then(async (data) => {
-                    console.log(data)
-                    document.getElementById('Login').style.display = 'none';
-                    localStorage.setItem('token', data);
-                    this.$router.push({ name: 'recipe-list' });
+                        })
+                            .then(response => response.text())
+                            .then(async (data) => {
+                                console.log(data)
+                                document.getElementById('Login').style.display = 'none';
+                                localStorage.setItem('token', data);
+                                this.$router.replace({ name: 'recipe-list' });
+                            })
+                    }).catch(err => {
+                        this.snackbar = true
+                        this.snackbarText = "Username already exists"
+                    })
+            }
+        },
+        async handleLogIn(e) {
+            e.preventDefault();
+            const result = await this.v$.loginForm.$validate()
+            console.log("result", result);
+            console.log("valliiidd", this.v$.loginForm.username.$errors)
+            console.log("password", this.v$.loginForm.password.$errors)
+            if (result) {
+                fetch(`http://localhost:8080/login`, {
+                    method: 'POST',
+                    // send data as form not as stringified JSON
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: this.loginForm.username,
+                        password: this.loginForm.password,
+                    }), // body data type must match "Content-Type" header
+
                 })
+                    .then(response => response.text())
+                    .then(async (data) => {
+                        console.log("login", data)
+                        if (data) {
+                            document.getElementById('Login').style.display = 'none';
+                            localStorage.setItem('token', data);
+                            this.$router.push({ name: 'recipe-list' });
+                        }else{
+                            this.snackbar = true
+                        }
+                    })
+            }
         }
     },
 };
@@ -523,6 +616,12 @@ input[type=password] {
     animation: animatezoom 0.6s
 }
 
+.input-errors {
+    color: red;
+    font-size: 12px;
+    margin: 0 0 0 10px;
+}
+
 @-webkit-keyframes animatezoom {
     from {
         -webkit-transform: scale(0)
@@ -541,4 +640,5 @@ input[type=password] {
     to {
         transform: scale(1)
     }
-}</style>
+}
+</style>

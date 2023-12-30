@@ -11,6 +11,7 @@
         <List :recipiesArray="fltRecipes" :user="user" />
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import NavBar from '../../components/NavBar.vue';
 import SideBar from './components/SideBar.vue';
 import SearchBar from './components/SearchBar.vue';
 import List from './components/List.vue';
+import Footer from '../../components/Footer.vue';
 import { ref, onMounted } from 'vue';
 
 

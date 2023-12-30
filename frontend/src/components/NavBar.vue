@@ -16,10 +16,16 @@
                         <form class="formC-content animate">
                             <div class="container">
                                 <p>sign In</p>
-                                <input v-model="loginForm.username" class="text" type="text" placeholder="username/email"
+                                <input v-model="loginForm.username" class="text" type="text" placeholder="username"
                                     name="username" required>
+                                <div class="input-errors" v-for="error of v$.loginForm.username.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
                                 <input v-model="loginForm.password" class="psw" type="password" placeholder="password"
                                     name="psw" required>
+                                <div class="input-errors" v-for="error of v$.loginForm.password.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
                                 <button class="sbt" @click="handleLogIn">Enter</button>
                             </div>
                         </form>
@@ -31,17 +37,36 @@
                         <form class="formC-content2 animate">
                             <div class="container">
                                 <p>sign Up</p>
+
                                 <input v-model="signupForm.username" class="text" type="text" placeholder="username"
                                     name="username" required>
+                                <div class="input-errors" v-for="error of v$.signupForm.username.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
                                 <input v-model="signupForm.name" class="text" type="text" placeholder="name" name="name"
                                     required>
+                                <div class="input-errors" v-for="error of v$.signupForm.name.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
                                 <input v-model="signupForm.password" class="psw" type="password" placeholder="password"
                                     name="psw" required>
+                                <div class="input-errors" v-for="error of v$.signupForm.password.$errors" :key="error.$uid">
+                                    <div class="error-msg">{{ error.$message }}</div>
+                                </div>
                                 <!-- <input class="psw" type="password" placeholder="confirm password" name="cpsw" required> -->
                                 <button class="sbt" @click="handleSignUp">Enter</button>
                             </div>
                         </form>
                     </div>
+                    <v-snackbar v-model="snackbar" :timeout="2000">
+                        {{snackbarText}}
+
+                        <template v-slot:actions>
+                            <v-btn color="blue" variant="text" @click="snackbar = false">
+                                Close
+                            </v-btn>
+                        </template>
+                    </v-snackbar>
 
                 </div>
             </li>
@@ -50,7 +75,12 @@
 </template>
 
 <script scoped>
+import { useVuelidate } from '@vuelidate/core'
+import { required, minLength, maxLength, alpha, alphaNum } from '@vuelidate/validators'
 export default {
+    setup() {
+        return { v$: useVuelidate() }
+    },
     data() {
         return {
             name: 'NavBar',
@@ -65,8 +95,24 @@ export default {
             loginForm: {
                 username: '',
                 password: ''
-            }
+            },
+            snackbar: false,
+            snackbarText: ''
 
+        }
+    },
+    validations() {
+        return {
+            signupForm: {
+                username: { required, minLength: minLength(3), maxLength: maxLength(16), alphaNum },
+                name: { required, minLength: minLength(3), maxLength: maxLength(16), alpha },
+                password: { required, minLength: minLength(8), maxLength: maxLength(16) },
+                // cpassword: { required }
+            },
+            loginForm: {
+                username: { required, minLength: minLength(3), maxLength: maxLength(16), alphaNum },
+                password: { required, minLength: minLength(8), maxLength: maxLength(16) },
+            }
         }
     },
     methods: {
@@ -74,62 +120,111 @@ export default {
             const randomRecipeNumber = Math.floor(Math.random() * 30);
             return `/recipe/${randomRecipeNumber}`;
         },
-        handleSignUp(e) {
+        async handleSignUp(e) {
             e.preventDefault();
             console.log(this.signupForm)
-            fetch(`http://localhost:8080/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: this.signupForm.username,
-                    name: this.signupForm.name,
-                    password: this.signupForm.password,
-                }),
-            })
-                .then(response => response.json())
-                .then((data) => {
-                    console.log(data)
-                    document.getElementById('Signup').style.display = 'none';
+            const result = await this.v$.signupForm.$validate()
+            console.log("result", result);
+            if (result) {
+                fetch(`http://localhost:8080/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: this.signupForm.username,
+                        name: this.signupForm.name,
+                        password: this.signupForm.password,
+                    }),
                 })
-        },
-        handleLogIn(e) {
-            e.preventDefault();
-            fetch(`http://localhost:8080/login`, {
-                method: 'POST',
-                // send data as form not as stringified JSON
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: this.loginForm.username,
-                    password: this.loginForm.password,
-                }), // body data type must match "Content-Type" header
+                    .then(response => response.json())
+                    .then((data) => {
+                        console.log("Dataaaa",data)
+                        document.getElementById('Signup').style.display = 'none';
+                        if (!data) {
+                            this.snackbar = true
+                            this.snackbarText = "Username already exists"
+                            return
+                        }
+                        
+                        fetch(`http://localhost:8080/login`, {
+                            method: 'POST',
+                            // send data as form not as stringified JSON
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                username: this.signupForm.username,
+                                password: this.signupForm.password,
+                            }), // body data type must match "Content-Type" header
 
-            })
-                .then(response => response.text())
-                .then(async (data) => {
-                    console.log(data)
-                    document.getElementById('Login').style.display = 'none';
-                    localStorage.setItem('token', data);
-                    this.$router.push({ name: 'recipe-list' });
+                        })
+                            .then(response => response.text())
+                            .then(async (data) => {
+                                console.log(data)
+                                document.getElementById('Login').style.display = 'none';
+                                localStorage.setItem('token', data);
+                                this.$router.replace({ name: 'recipe-list' });
+                                if(this.$route.name == 'recipe-list')
+                                    this.$router.go();
+                            })
+                    }).catch(err => {
+                        this.snackbar = true
+                        this.snackbarText = "Username already exists"
+                    })
+            }
+        },
+        async handleLogIn(e) {
+            e.preventDefault();
+            const result = await this.v$.loginForm.$validate()
+            console.log("result", result);
+            console.log("valliiidd", this.v$.loginForm.username.$errors)
+            console.log("password", this.v$.loginForm.password.$errors)
+            if (result) {
+                fetch(`http://localhost:8080/login`, {
+                    method: 'POST',
+                    // send data as form not as stringified JSON
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: this.loginForm.username,
+                        password: this.loginForm.password,
+                    }), // body data type must match "Content-Type" header
+
                 })
+                    .then(response => response.text())
+                    .then(async (data) => {
+                        console.log("login", data)
+                        if (data) {
+                            document.getElementById('Login').style.display = 'none';
+                            localStorage.setItem('token', data);
+                            this.$router.push({ name: 'recipe-list' });
+                            if(this.$route.name == 'recipe-list')
+                                this.$router.go();
+                        }else{
+                            this.snackbar = true
+                            this.snackbarText = "Wrong username or password"
+                        }
+                    })
+            }
         }
     },
     mounted() {
         console.log(localStorage.getItem('token'))
         if (localStorage.getItem('token')) {
             fetch("http://localhost:8080/info", {
-                headers:{
+                headers: {
                     Authorization: `${localStorage.getItem('token')}`
                 }
             }).
                 then(response => response.json())
                 .then(data => {
-                    console.log("navbar",data)
+                    console.log("navbar", data)
                     this.username = data.username
                     this.logged = true;
+                }).catch(err => {
+                    console.log(err)
                 })
 
         }
@@ -288,6 +383,12 @@ a {
 .login:active,
 .signup:active {
     scale: 110%;
+}
+
+.input-errors {
+    color: red;
+    font-size: 12px;
+    margin: 0 0 0 10px;
 }
 
 @media (min-width:0px) {
