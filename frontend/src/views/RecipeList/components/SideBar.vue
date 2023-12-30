@@ -16,37 +16,37 @@
                 <h3>Cuisines</h3>
                 <hr>
                 <div class="filter">
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Breakfast"
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="arabian"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Arabian</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Lunch"
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="European"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">European</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Dinner"
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="American"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">American</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Snacks"
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Mexican"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Mexican </span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Dessert"
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Japanese"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Japanese </span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Dessert"
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Chinese"
                     @click="emitFilters">
                     <template v-slot:label>
                             <span class="lol">Chinese</span>

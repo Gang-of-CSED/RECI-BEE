@@ -7,7 +7,7 @@
         <div class="slogan">
           <h6>Unlock The<br>Flavors Of The World</h6>
         </div>
-      <SearchBar @sort-event="sortRecipes" @search-event="searchRecipes"/>
+      <SearchBar @sort-event="sortRecipes" @search-event="filterRecipes"/>
         <List :recipiesArray="fltRecipes" :user="user" />
       </div>
     </div>
@@ -29,57 +29,80 @@ const userFavorites = ref([]);
 const user = ref(null);
 
 
-const filterRecipes = (selected) => {
-  // Helper function to convert time string to a comparable number (minutes)
-  const timeToMinutes = (time) => {
-    if (time === "5 - 10 Mins") return [5, 10];
-    if (time === "10 - 30 Mins") return [10, 30];
-    if (time === "30 - 60 Mins") return [30, 60];
-    if (time === "+1 Hour") return [61, Infinity];
-    return [0, 0];
+const filterRecipes = (selected,searchWord, searchLogic) => {
+ 
+  if (searchWord && searchLogic) {
+
+      const searchWords = searchWord.toLowerCase().split(/,|\s+/).filter(Boolean); // Split by comma or space and remove empty strings
+
+      fltRecipes.value = allRecipes.value.filter(recipe => {
+        if (searchLogic === 'name') {
+          return recipe.name.toLowerCase().includes(searchWord.toLowerCase());
+        } else if (searchLogic === 'ingredients') {
+          const recipeIngredients = recipe.ingredients.toLowerCase().split(/,|\s+/).map(ingredient => ingredient.trim());
+                return searchWords.every(searchIngredient =>
+            recipeIngredients.includes(searchIngredient)
+          );
+        }
+
+    });
+  }
+  else{
+    fltRecipes.value=allRecipes.value
   };
-  const calorieToRange = (calorie) => {
-    if (calorie === "1 - 50") return [1, 50];
-    if (calorie === "50 - 150") return [50, 150];
-    if (calorie === "150 - 300") return [150, 300];
-    if (calorie === "+300") return [301, Infinity];
-    return [0, 0];
-  };
 
-  const selectedTimeRanges = selected.time && selected.time.length > 0 ? selected.time.map(t => timeToMinutes(t)) : null;
+  if(selected!=null){
+    const timeToMinutes = (time) => {
+      if (time === "5 - 10 Mins") return [5, 10];
+      if (time === "10 - 30 Mins") return [10, 30];
+      if (time === "30 - 60 Mins") return [30, 60];
+      if (time === "+1 Hour") return [61, Infinity];
+      return [0, 0];
+    };
+    const calorieToRange = (calorie) => {
+      if (calorie === "1 - 50") return [1, 50];
+      if (calorie === "50 - 150") return [50, 150];
+      if (calorie === "150 - 300") return [150, 300];
+      if (calorie === "+300") return [301, Infinity];
+      return [0, 0];
+    };
+
+    const selectedTimeRanges = selected.time && selected.time.length > 0 ? selected.time.map(t => timeToMinutes(t)) : null;
+    const selectedCaloriesRanges = selected.calories && selected.calories.length > 0 ? selected.calories.map(t => calorieToRange(t)) : null;
+
+    fltRecipes.value = fltRecipes.value.filter(recipe => {
+
+      const categoryMatch = selected.categories && selected.categories.length > 0
+        ? recipe.categories.some(category => selected.categories.includes(category))
+        : true;
+
+      const cuisineMatch = selected.cuisines && selected.categories.length > 0
+        ? recipe.categories.some(cuisine => selected.Cuisines.includes(cuisine))
+        : true;
+
+      const timeMatch = selectedTimeRanges
+        ? selectedTimeRanges.some(([min, max]) => recipe.time >= min && recipe.time <= max)
+        : true;
+
+      const calorieMatch = selectedCaloriesRanges
+        ? selectedCaloriesRanges.some(([min, max]) => recipe.calories >= min && recipe.calories <= max)
+        : true;
+
+      const isLiked = selected.liked ? recipe.isFavorite : true;
+      const isSaved = selected.saved ? recipe.isFavorite : true;
+
+      // console.log("reciperating",recipe.rate)
+      // console.log("selectedrating",selected.rating)
+
+      const ratingMatch = selected.rating === 0 || parseInt(recipe.rate) == parseInt(selected.rating);
+
+      return categoryMatch && timeMatch && isLiked && ratingMatch&& isSaved && calorieMatch && cuisineMatch;
+    });
+  }
 
 
-  fltRecipes.value = allRecipes.value.filter(recipe => {
 
-    const categoryMatch = selected.categories && selected.categories.length > 0
-      ? recipe.categories.some(category => selected.categories.includes(category))
-      : true;
-
-    const cuisineMatch = selected.cuisines && selected.categories.length > 0
-      ? recipe.categories.some(cuisine => selected.Cuisines.includes(cuisine))
-      : true;
-
-    const timeMatch = selectedTimeRanges
-      ? selectedTimeRanges.some(([min, max]) => recipe.time >= min && recipe.time <= max)
-      : true;
-
-    const calorieMatch = selectedCalorieRanges
-      ? selectedCalorieRanges.some(([min, max]) => recipe.calories >= min && recipe.calories <= max)
-      : true;
-
-    const isLiked = selected.liked ? recipe.isFavorite : true;
-    const isSaved = selected.saved ? recipe.isFavorite : true;
-
-    // console.log("reciperating",recipe.rate)
-    // console.log("selectedrating",selected.rating)
-
-    const ratingMatch = selected.rating === 0 || parseInt(recipe.rate) == parseInt(selected.rating);
-
-    return categoryMatch && timeMatch && isLiked && ratingMatch&& isSaved && calorieMatch && cuisineMatch;
-  });
-
-  //   console.log(JSON.stringify(fltRecipes.value, null, 2));
-  return fltRecipes.value;
+  // return fltRecipes.value;
 };
 
 const sortRecipes = (sortLogic) => {
@@ -88,12 +111,12 @@ const sortRecipes = (sortLogic) => {
       case 'time':
         return a.time - b.time;
       case 'rate':
-        // Assuming higher rating is better
+        
         return b.rate - a.rate;
       case 'calories':
         return a.calories - b.calories;
       default:
-        // Default case if an unknown sort logic is passed
+       
         return 0;
     }
   };
@@ -101,24 +124,24 @@ const sortRecipes = (sortLogic) => {
   fltRecipes.value.sort(compare);
 };
 
-const searchRecipes = (searchWord, searchLogic) => {
- 
-  if (!searchWord || !searchLogic) return;
+// const searchRecipes = (searchWord, searchLogic) => {
 
-  const searchWordLower = searchWord.toLowerCase();
+//   if (!searchWord || !searchLogic) return;
 
-  fltRecipes.value = fltRecipes.value.filter(recipe => {
-    if (searchLogic === 'name') {
-      return recipe.name.toLowerCase().includes(searchWordLower);
-    } else if (searchLogic === 'ingredients') {
-      // Assuming 'ingredients' is an array of strings in each recipe
-      return recipe.ingredients.some(ingredient =>
-        ingredient.toLowerCase().includes(searchWordLower)
-      );
-    }
-    return false;
-  });
-};
+//   const searchWords = searchWord.toLowerCase().split(/,|\s+/).filter(Boolean); // Split by comma or space and remove empty strings
+
+//   fltRecipes.value = fltRecipes.value.filter(recipe => {
+//     if (searchLogic === 'name') {
+//       return recipe.name.toLowerCase().includes(searchWord.toLowerCase());
+//     } else if (searchLogic === 'ingredients') {
+//       const recipeIngredients = recipe.ingredients.toLowerCase().split(/,|\s+/).map(ingredient => ingredient.trim());
+//             return searchWords.every(searchIngredient =>
+//         recipeIngredients.includes(searchIngredient)
+//       );
+//     }
+//     return false;
+//   });
+// };
 onMounted(() => {
   const token = localStorage.getItem('token');
   if (token) {
