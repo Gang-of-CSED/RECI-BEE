@@ -217,8 +217,7 @@ export default {
                 headers: {
                     Authorization: `${localStorage.getItem('token')}`
                 }
-            }).
-                then(response => response.json())
+            }).then(response => response.json())
                 .then(data => {
                     console.log("navbar", data)
                     this.username = data.username
