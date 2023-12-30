@@ -129,7 +129,7 @@ export default {
         this.changeNums();
       }
       this.updateSubArray();
-      if(this.recipiesArray.length / this.nums < this.currentPage){
+      if(Math.ceil(this.recipiesArray.length / this.nums) < this.currentPage){
         this.currentPage = 1;
       }
       this.goToPage(this.currentPage);
