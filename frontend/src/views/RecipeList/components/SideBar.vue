@@ -211,6 +211,13 @@
                             <span class="lol">Show Liked Recipes</span>
                         </template>
                     </v-checkbox>
+                    <!-- checkbox for saves -->
+                    <v-checkbox density="compact" v-model="saved" hide-details class="labels" value="Saved"
+                        @click="emitFilters">
+                        <template v-slot:label>
+                            <span class="lol">Show Saved Recipes</span>
+                        </template>
+                    </v-checkbox>
                 </div>
             </li>
             <li v-if="user">
@@ -239,7 +246,6 @@ export default {
             diets: [],
             time: [],
             liked: false,
-            saved:false
         };
     },
     methods: {
@@ -272,8 +278,7 @@ export default {
                     diets: this.diets,
                     time: this.time,
                     liked: this.liked,
-                    saved: this.saved,
-                },'','');
+                });
             }, 0);
         },
     },
