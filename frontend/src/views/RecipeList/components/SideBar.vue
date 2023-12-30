@@ -279,7 +279,7 @@ export default {
                     time: this.time,
                     liked: this.liked,
                 });
-            }, 0);
+            }, "","");
         },
     },
     props:{

@@ -150,7 +150,7 @@ export default {
 } */
    .recipies{
     /* padding:3% ; */
-    padding-top: 5%;
+    padding-top: 2%;
     padding-left: 5%;
     flex-wrap: wrap;
     display: flex;

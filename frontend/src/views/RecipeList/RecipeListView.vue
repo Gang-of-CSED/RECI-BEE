@@ -53,7 +53,7 @@ const filterRecipes = (selected,searchWord, searchLogic) => {
 
     });
   }
-  else{
+  else if(searchWord=="" && searchLogic==""){
     fltRecipes.value=allRecipes.value
   };
 
