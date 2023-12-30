@@ -3,7 +3,7 @@
      <!-- <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div> -->
 
      <div class="recipies">
-         <Card v-for="card in recipiesArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" @toggle-save="toggleSave" class="cards" :user="user" />
+         <Card v-for="card in recipiesSubArray" :key="card.name" :card-data="card" @toggle-favorite="toggleFavorite" @toggle-save="toggleSave" class="cards" :user="user" />
      </div>
      <div class="pagin-bar">
         <button class="pagin-btn" @click="getPre"> &lt; </button>
