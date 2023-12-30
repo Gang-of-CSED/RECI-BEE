@@ -1,5 +1,5 @@
 <template>
-   <div class="list">
+   <div class="list" @mousemove="refresh">
      <!-- <div class="slogan"><h6>Unlock The<br>Flavors Of The World</h6></div> -->
 
      <div class="recipies">
@@ -50,6 +50,7 @@ export default {
       nums: 8,
       start: 0, 
       end: 10,
+      begin: true,
     };
   },
   methods: {
@@ -121,7 +122,13 @@ export default {
         this.goToPage(1);
         this.nums = parseInt(this.nums);
         console.log(this.nums);
-    }
+    },
+    refresh(){
+      if(this.begin){
+        this.begin = false;
+        this.changeNums();
+      }
+    },
    
 
   },
