@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class RecipeManager {
 //     private static final String RECIPE_FILE_PATH = "backend\\src\\main\\java\\com\\recibee\\backend\\data\\recipes.json";
-    private static final String RECIPE_FILE_PATH = Paths.get("").toAbsolutePath().resolve("backend\\src\\main\\java\\com\\recibee\\backend\\data\\recipes.json").toString();
+    private static final String RECIPE_FILE_PATH = Paths.get("").toAbsolutePath().resolve("src\\main\\java\\com\\recibee\\backend\\data\\recipes.json").toString();
     private static RecipeManager instance = null;
     private Map<Integer, RecipeModel> recipes = new HashMap<Integer, RecipeModel>();
 
