@@ -76,7 +76,7 @@
       // Emit the search word and type to the parent
       if(this.searchLogic==null)
           this.searchLogic=''
-      this.$emit('search-event',null,this.searchWord,this.searchLogic.toLowerCase() );
+      this.$emit('search-event',this.searchWord,this.searchLogic.toLowerCase() );
     },
     sortRecipes() {
       // Emit the sort logic to the parent

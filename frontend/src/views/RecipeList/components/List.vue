@@ -179,6 +179,7 @@ export default {
 }
 .pagin-bar{
   margin-bottom: 10%;
+  margin-left:30vw;
 }
 #inPage{
   width: auto;

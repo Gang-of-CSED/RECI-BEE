@@ -220,7 +220,7 @@
                     </v-checkbox>
                 </div>
             </li>
-            <li v-if="user">
+            <!-- <li v-if="user">
                 <h3>Saved</h3>
                 <hr>
                 <div class="filter">
@@ -231,7 +231,7 @@
                         </template>
                     </v-checkbox>
                 </div>
-            </li>
+            </li> -->
         </ul>
     </div>
 </template>
@@ -279,7 +279,7 @@ export default {
                     time: this.time,
                     liked: this.liked,
                 });
-            }, "","");
+            },0);
         },
     },
     props:{
