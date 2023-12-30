@@ -56,7 +56,7 @@ export default{
     },
     methods: {
         async fetchContributions(){
-            const id = this.$route.params.id 
+            const id = this.$route.params.id
             try {
                 this.contributions  = await (await fetch(`http://localhost:8080/comments/${id}`)).json();
             } catch (error) {
@@ -65,7 +65,7 @@ export default{
         },
         addContribution(){
             if(this.newContribution.comment.length > 0 && this.newContribution.rating > 0){
-                const id = this.$route.params.id 
+                const id = this.$route.params.id
                 fetch(`http://localhost:8080/comments`, {
                     method: 'POST',
                     headers: {

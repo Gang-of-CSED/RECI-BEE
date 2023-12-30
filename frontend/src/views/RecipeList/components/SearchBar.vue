@@ -119,7 +119,7 @@
    padding-top: 10px;
   }
   .searchBar{
-    background: #f6f2e6;
+    background: #FBF7EB;
     margin-top: 2vh;
     margin-left: 4.5vw;
     border:1px solid rgb(110, 39, 39);

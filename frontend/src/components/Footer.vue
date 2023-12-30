@@ -33,11 +33,13 @@ export default {
 <style scoped>
 .footer {
     background-color: #FBF7EB;
-    height: 116px;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #312525;
+
+    padding-right: 100px;
 }
 h1 {
     margin: 0 0 0 57px;
@@ -69,7 +71,11 @@ a {
 }
 
 .ll{
-    height: 48px;
+    height: 45px;
+
+    margin-right: 800px;
+
+
     border: 1px #898989 solid;
 }
 

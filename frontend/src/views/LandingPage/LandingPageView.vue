@@ -9,9 +9,9 @@
 </template>
 
 <script setup>
+import Footer from '../../components/Footer.vue';
 import NavBar from '../../components/NavBar.vue';
 import LandingPageDetails from './components/LandingPageDetails.vue';
-import Footer from '../../components/Footer.vue';
 
 </script>
 
@@ -24,5 +24,6 @@ import Footer from '../../components/Footer.vue';
     position: fixed;
     width: 100%;
     z-index: 10;
+    box-shadow: 0px 5px 10px 0px #aaa8a150;
 }
 </style>

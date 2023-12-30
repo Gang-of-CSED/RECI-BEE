@@ -13,7 +13,7 @@
      <div class="recipefooter">
 
         <div class="recipeName" v-html="cardData.name" > </div>  
-        <v-icon v-if="user" size="20" color="#312525" @click="toggleSave" >
+        <v-icon v-if="user" size="25" color="#312525" @click="toggleSave" >
                 {{ cardData.isSave ? 'mdi-bookmark' : 'mdi-bookmark-outline' }}
             </v-icon>
          <img v-if="user" class="heart" :src="cardData.isFavorite ? favPath : notFavPath" alt="Heart" @click="toggleFavorite" />
@@ -92,6 +92,7 @@ export default {
   height: 15.625vw;
   border-radius:10%;
   border-bottom:5px solid #312525;
+  cursor: pointer;
   }
 .recipeImg{
   margin-top:0.69445vw ;

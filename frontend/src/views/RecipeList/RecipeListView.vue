@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar />
+    <NavBar  style="   box-shadow: 0px 5px 10px 0px #aaa8a150; "/>
     <div class="recipe-list">
       <SideBar @filters-updated="filterRecipes" :user="user" />
       <div class="showList">
@@ -17,12 +17,12 @@
 
 <script setup >
 import axios from 'axios';
-import NavBar from '../../components/NavBar.vue';
-import SideBar from './components/SideBar.vue';
-import SearchBar from './components/SearchBar.vue';
-import List from './components/List.vue';
+import { onMounted, ref } from 'vue';
 import Footer from '../../components/Footer.vue';
-import { ref, onMounted } from 'vue';
+import NavBar from '../../components/NavBar.vue';
+import List from './components/List.vue';
+import SearchBar from './components/SearchBar.vue';
+import SideBar from './components/SideBar.vue';
 
 
 const allRecipes = ref([]);

@@ -11,7 +11,8 @@
             <button class="pagin-btn" @click="goToPage(index+1)" :style="{ backgroundColor: index + 1 === currentPage ? '#FBBC3B' : '#E35733' }">{{ index+1 }}</button>
         </span>
         <button class="pagin-btn" @click="getNext"> &gt; </button>
-        <span> recipes in one page:
+    </div >
+    <span class="pagin-txt"> Recipes in one page:
           <select id="inPage" name="choices" v-model="nums" @change="changeNums">
               <option value="8">8</option>
               <option value="16">16</option>
@@ -21,16 +22,14 @@
           </select>
           </span>
 
-    </div>
-
      
    </div>
 </template>
 
 <script>
 
-import Card from './Card.vue'; 
 import axios from 'axios';
+import Card from './Card.vue';
 
 export default {
   name: 'List.vue',
@@ -164,27 +163,33 @@ export default {
   margin: 0.8333vw;
   /* flex: 0 0 calc(25% - 24px);  */
   /* flex: 0 0 225;  */
-  box-sizing: border-box; 
+  box-sizing: border-box;
  
 }
 .pagin-btn{
-    padding: 8px;
-    margin: 2px;
+    height: 30px;
+    width: 30px;
+    margin: 3px;
     border-radius: 20px;
     font-size: 1em;
     cursor: pointer;
     background-color: #E35733;
-    color: #FBF7EB;
-    width: auto;
+    color: hsl(45, 67%, 95%);
+
 }
-.pagin-bar{
-  margin-bottom: 10%;
+.pagin-bar, .pagin-txt{
+  margin-bottom: 1%;
   margin-left:30vw;
 }
 #inPage{
   width: auto;
   height: auto;
   margin-left: 10px;
+}
+
+.pagin-txt{
+  font-size: 1.2em;
+  color: #312525;
 }
 /* .slogan{
   

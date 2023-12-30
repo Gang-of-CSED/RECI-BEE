@@ -5,11 +5,11 @@
         </div>
         <ul>
             <li><a href="/recipes">Browse Catalogue</a></li>
-            <li><a href="/recipe/1">Dish Of The Day</a></li>
+            <li><a href="/recipe/42">Dish Of The Day</a></li>
             <li><a :href="randomDishLink()">Random Dish</a></li>
             <li><a href="/home">About Us</a></li>
             <li>
-                <h3 v-if="logged">{{ username }}</h3>
+                <h3 v-if="logged" @click="logout">{{ username }}</h3>
                 <div v-else class="log">
                     <button class="login" onclick="document.getElementById('Login').style.display='block'">LOG IN</button>
                     <div id="Login" class="formC">
@@ -76,7 +76,7 @@
 
 <script scoped>
 import { useVuelidate } from '@vuelidate/core'
-import { required, minLength, maxLength, alpha, alphaNum } from '@vuelidate/validators'
+import { alpha, alphaNum, maxLength, minLength, required } from '@vuelidate/validators'
 export default {
     setup() {
         return { v$: useVuelidate() }
@@ -119,6 +119,12 @@ export default {
         randomDishLink() {
             const randomRecipeNumber = Math.floor(Math.random() * 30);
             return `/recipe/${randomRecipeNumber}`;
+        },
+        logout() {
+            localStorage.removeItem('token');
+            this.logged = false;
+            this.username = "";
+            //this.$router.push({ name: 'home' });
         },
         async handleSignUp(e) {
             e.preventDefault();
@@ -246,7 +252,7 @@ export default {
 <style scoped>
 .navbar {
     background-color: #FBF7EB;
-    height: 116px;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -270,6 +276,7 @@ h3 {
 
     margin-left: 19px;
     font-size: 20px;
+    cursor: pointer;
 }
 
 ul {

@@ -1,7 +1,7 @@
 <!-- vue template  -->
 <template>
   <div class="recipe-detail">
-    <NavBar/>
+    <NavBar class="Nav" />
     <div class="wrapper">
       <RecipeInfo :recipe="recipe" class="recipe-info"/>
       <RecipeReview :recipe="recipe"  class="recipe-review" />
@@ -11,10 +11,10 @@
 </template>
 
 <script>
+import Footer from '../../components/Footer.vue';
 import NavBar from '../../components/NavBar.vue';
 import RecipeInfo from './components/RecipeInfo.vue';
 import RecipeReview from './components/RecipeReview.vue';
-import Footer from '../../components/Footer.vue';
 export default {
   components: {
     NavBar,
@@ -66,6 +66,13 @@ export default {
 .recipe-detail {
   /* height: auto; */
   background: #FBF7EB;
+}
+
+.Nav {
+    width: 100%;
+    z-index: 20;
+    box-shadow: 0px 5px 10px 0px #aaa8a150;
+    margin-bottom: 2%;
 }
 
 </style>

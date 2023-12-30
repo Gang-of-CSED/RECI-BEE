@@ -598,7 +598,71 @@
         "steps": "<p>In a blender, combine avocados, cocoa powder, maple syrup, almond milk, and vanilla extract.</p><p>Blend until smooth and creamy.</p><p>Refrigerate for at least 1 hour before serving.</p><p>Indulge in this rich and healthy chocolate mousse!</p>",
         "rate": 4.5,
         "cover": "/static/AvocadoChocolateMousse.jpg"
+      },
+      {
+        "id": 43,
+        "name": "<p>Vegetable Spring Rolls</p>",
+        "description": "<p>Delicious Asian spring rolls filled with fresh vegetables and served with a flavorful dipping sauce.</p>",
+        "ingredients": "<p>10 spring roll wrappers</p><p>1 cup shredded cabbage</p><p>1 cup julienned carrots</p><p>1 cup bean sprouts</p><p>1/2 cup sliced bell peppers</p><p>1/4 cup chopped fresh mint</p><p>1/4 cup chopped cilantro</p><p>1/4 cup soy sauce</p><p>2 tbsp rice vinegar</p><p>1 tbsp sesame oil</p><p>1 tsp sugar</p>",
+        "categories": ["Appetizers"],
+        "time": 30,
+        "steps": "<p>Prepare all the vegetables and herbs.</p><p>Soak a spring roll wrapper in warm water until pliable. Lay it flat on a surface.</p><p>Place a small portion of each vegetable and herb in the center of the wrapper.</p><p>Roll the wrapper tightly, folding the sides in, to form a spring roll.</p><p>Repeat with remaining wrappers and filling.</p><p>In a bowl, mix soy sauce, rice vinegar, sesame oil, and sugar for the dipping sauce.</p><p>Serve the spring rolls with the dipping sauce.</p>",
+        "rate": 4.7,
+        "cover": "/static/VegetableSpringRolls.jpg",
+        "cuisine": "Asian",
+        "diet": ["Vegetarian"]
+      },
+      {
+        "id": 44,
+        "name": "<p>Quinoa Salad</p>",
+        "description": "<p>A nutritious and colorful salad featuring quinoa, vegetables, and a zesty lemon vinaigrette.</p>",
+        "ingredients": "<p>1 cup quinoa, cooked and cooled</p><p>1 cup cherry tomatoes, halved</p><p>1 cucumber, diced</p><p>1/2 cup red bell pepper, diced</p><p>1/4 cup red onion, finely chopped</p><p>1/4 cup feta cheese, crumbled</p><p>1/4 cup Kalamata olives, sliced</p><p>2 tbsp fresh parsley, chopped</p><p>2 tbsp olive oil</p><p>1 tbsp lemon juice</p><p>1 tsp Dijon mustard</p><p>Salt and pepper to taste</p>",
+        "categories": ["Lunch", "Dinner", "Salads"],
+        "time": 15,
+        "steps": "<p>In a large bowl, combine cooked quinoa, cherry tomatoes, cucumber, red bell pepper, red onion, feta cheese, olives, and parsley.</p><p>In a small bowl, whisk together olive oil, lemon juice, Dijon mustard, salt, and pepper.</p><p>Pour the dressing over the salad and toss to combine.</p><p>Serve chilled and enjoy!</p>",
+        "rate": 4.5,
+        "cover": "/static/QuinoaSalad.jpg",
+        "cuisine": "American",
+        "diet": ["Vegetarian"]
+      },
+      {
+        "id": 45,
+        "name": "<p>Tom Yum Soup</p>",
+        "description": "<p>A spicy and sour Thai soup with shrimp, mushrooms, and aromatic herbs.</p>",
+        "ingredients": "<p>4 cups chicken or vegetable broth</p><p>1 lb shrimp, peeled and deveined</p><p>1 cup mushrooms, sliced</p><p>2 tomatoes, cut into wedges</p><p>1 stalk lemongrass, bruised</p><p>3 kaffir lime leaves</p><p>3 tbsp fish sauce</p><p>2 tbsp lime juice</p><p>1 tbsp chili paste</p><p>1 tsp sugar</p><p>Fresh cilantro for garnish</p>",
+        "categories": ["Soup", "Dinner"],
+        "time": 30,
+        "steps": "<p>In a pot, bring the broth to a boil. Add lemongrass and kaffir lime leaves.</p><p>Add mushrooms, shrimp, and tomatoes. Simmer until shrimp is cooked.</p><p>Stir in fish sauce, lime juice, chili paste, and sugar.</p><p>Remove lemongrass and kaffir lime leaves.</p><p>Serve hot, garnished with fresh cilantro.</p>",
+        "rate": 4.8,
+        "cover": "/static/TomYumSoup.jpg",
+        "cuisine": "Asian",
+        "diet": []
+      },
+      {
+        "id": 46,
+        "name": "<p>Baked Salmon with Lemon-Dill Sauce</p>",
+        "description": "<p>Healthy and flavorful baked salmon served with a zesty lemon-dill sauce.</p>",
+        "ingredients": "<p>4 salmon fillets</p><p>1 lemon, sliced</p><p>2 tbsp olive oil</p><p>1 tsp dried dill</p><p>1 tsp garlic powder</p><p>Salt and pepper to taste</p><p>For the sauce: 1/2 cup Greek yogurt, 1 tbsp lemon juice, 1 tbsp fresh dill, salt and pepper</p>",
+        "categories": ["Dinner"],
+        "time": 25,
+        "steps": "<p>Preheat the oven to 400°F (200°C).</p><p>Place salmon fillets on a baking sheet. Drizzle with olive oil and season with dried dill, garlic powder, salt, and pepper.</p><p>Arrange lemon slices on top of the salmon.</p><p>Bake for 15-20 minutes or until salmon is cooked through.</p><p>While baking, mix Greek yogurt, lemon juice, fresh dill, salt, and pepper to make the sauce.</p><p>Serve the baked salmon with the lemon-dill sauce.</p>",
+        "rate": 4.9,
+        "cover": "/static/BakedSalmon.jpg",
+        "cuisine": "European",
+        "diet": ["Keto"]
+      },
+      {
+        "id": 47,
+        "name": "<p>Miso Soup</p>",
+        "description": "<p>A traditional Japanese soup made with miso paste, tofu, seaweed, and green onions.</p>",
+        "ingredients": "<p>4 cups dashi broth</p><p>3 tbsp miso paste</p><p>1/2 cup tofu, diced</p><p>1/4 cup seaweed (wakame), rehydrated</p><p>2 green onions, sliced</p><p>1 cup shiitake mushrooms, sliced (optional)</p>",
+        "categories": ["Soup", "Dinner"],
+        "time": 20,
+        "steps": "<p>In a pot, bring dashi broth to a simmer.</p><p>Whisk in miso paste until dissolved.</p><p>Add tofu, seaweed, green onions, and shiitake mushrooms (if using).</p><p>Simmer for 5-7 minutes until heated through.</p><p>Serve hot and enjoy this comforting Japanese soup.</p>",
+        "rate": 4.6,
+        "cover": "/static/MisoSoup.jpg",
+        "cuisine": "Asian",
+        "diet": ["Vegetarian"]
       }
-       
-]       
-
+      
+]
