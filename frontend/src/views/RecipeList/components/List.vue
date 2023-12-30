@@ -128,17 +128,18 @@ export default {
         this.begin = false;
         this.changeNums();
       }
+      this.updateSubArray();
+      if(this.recipiesArray.length / this.num < this.currentPage){
+        this.currentPage = 1;
+      }
+      this.goToPage(this.currentPage);
+
     },
    
 
   },
   mounted(){
-  //   // fetch('http://localhost:3000/recipiesArray')
-  //   // .then(response => response.json()) // Convert the response to JSON
-  //   // .then(data => {
-  //   //   this.recipiesArray = data;
-  //   // })
-  //   // .catch(err => console.error("Error fetching recipes:", err));
+    setInterval(this.refresh, 50);
   },
 };
 </script>
