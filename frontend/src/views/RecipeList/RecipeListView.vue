@@ -76,7 +76,7 @@ const filterRecipes = (selected) => {
     const selectedTimeRanges = selected.time && selected.time.length > 0 ? selected.time.map(t => timeToMinutes(t)) : null;
     const selectedCaloriesRanges = selected.calories && selected.calories.length > 0 ? selected.calories.map(t => calorieToRange(t)) : null;
 
-    fltRecipes.value = fltRecipes.value.filter(recipe => {
+    fltRecipes.value = allRecipes.value.filter(recipe => {
    
 
       const categoryMatch = selected.categories && selected.categories.length > 0
@@ -141,17 +141,20 @@ const searchRecipes = (searchWord, searchLogic) => {
 
   const searchWords = searchWord.toLowerCase().split(/,|\s+/).filter(Boolean); // Split by comma or space and remove empty strings
 
-  fltRecipes.value = allRecipes.value.filter(recipe => {
-    if (searchLogic === 'name') {
-      return recipe.name.toLowerCase().includes(searchWord.toLowerCase());
-    } else if (searchLogic === 'ingredients') {
-      const recipeIngredients = recipe.ingredients.toLowerCase().split(/,|\s+/).map(ingredient => ingredient.trim());
+      fltRecipes.value = allRecipes.value.filter(recipe => {
+        if (searchLogic === 'name') {
+          return recipe.name.toLowerCase().includes(searchWord.toLowerCase());
+        } else if (searchLogic === 'ingredients') {
+          const recipeIngredients = recipe.ingredients.toLowerCase().replace(/<\/?p>/g, '').split(/,|\s+/).map(ingredient => ingredient.trim());
+
             return searchWords.every(searchIngredient =>
-        recipeIngredients.includes(searchIngredient)
-      );
-    }
-    return false;
-  });
+                recipeIngredients.some(recipeIngredient => 
+                    recipeIngredient.includes(searchIngredient)
+          )
+          );
+        }
+
+    });
 };
 onMounted(() => {
   const token = localStorage.getItem('token');

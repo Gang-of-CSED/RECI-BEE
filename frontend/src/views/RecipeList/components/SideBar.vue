@@ -34,24 +34,13 @@
                             <span class="lol">American</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Mexican"
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Asian"
                         @click="emitFilters">
                         <template v-slot:label>
-                            <span class="lol">Mexican </span>
+                            <span class="lol">Asian </span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Japanese"
-                        @click="emitFilters">
-                        <template v-slot:label>
-                            <span class="lol">Japanese </span>
-                        </template>
-                    </v-checkbox>
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Chinese"
-                    @click="emitFilters">
-                    <template v-slot:label>
-                            <span class="lol">Chinese</span>
-                        </template>
-                    </v-checkbox>
+                   
              
                 </div>
             </li>
@@ -119,24 +108,7 @@
                             <span class="lol">Vegetarian</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Vegan"
-                        @click="emitFilters">
-                        <template v-slot:label>
-                            <span class="lol">Vegan</span>
-                        </template>
-                    </v-checkbox>
-                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Gluten-free"
-                        @click="emitFilters">
-                        <template v-slot:label>
-                            <span class="lol">Gluten-free</span>
-                        </template>
-                    </v-checkbox>
-                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Lactose-free"
-                        @click="emitFilters">
-                        <template v-slot:label>
-                            <span class="lol">Lactose-free</span>
-                        </template>
-                    </v-checkbox>
+                   
                 </div>
             </li>
             <li>
