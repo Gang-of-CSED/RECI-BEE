@@ -16,7 +16,7 @@
                 <h3>Cuisines</h3>
                 <hr>
                 <div class="filter">
-                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="arabian"
+                    <v-checkbox density="compact" v-model="cuisines" hide-details class="labels" value="Arabian"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Arabian</span>
@@ -101,40 +101,40 @@
                 <h3>Diet</h3>
                 <hr>
                 <div class="filter" @click="emitFilters">
-                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Keto"
+                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Keto"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Keto </span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Suger free"
+                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Sugar-free"
                         @click="emitFilters">
                         <template v-slot:label>
-                            <span class="lol">Suger free </span>
+                            <span class="lol">Sugar-free </span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Vegetarian"
+                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Vegetarian"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">Vegetarian</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="vegan"
+                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Vegan"
                         @click="emitFilters">
                         <template v-slot:label>
-                            <span class="lol">vegan</span>
+                            <span class="lol">Vegan</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Gluten free"
+                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Gluten-free"
                         @click="emitFilters">
                         <template v-slot:label>
-                            <span class="lol">Gluten free</span>
+                            <span class="lol">Gluten-free</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="diet" hide-details class="labels" value="Lactose free"
+                    <v-checkbox density="compact" v-model="diets" hide-details class="labels" value="Lactose-free"
                         @click="emitFilters">
                         <template v-slot:label>
-                            <span class="lol">Lactose free</span>
+                            <span class="lol">Lactose-free</span>
                         </template>
                     </v-checkbox>
                 </div>
@@ -143,25 +143,25 @@
                 <h3>Calories</h3>
                 <hr>
                 <div class="filter" @click="emitFilters">
-                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="5 - 10 Mins"
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="1 - 50"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">1 - 50 </span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="10 - 30 Mins"
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="50 - 150"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">50 - 150 </span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="30 - 60 Mins"
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="150 - 300"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">150 - 300</span>
                         </template>
                     </v-checkbox>
-                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="+1 Hour"
+                    <v-checkbox density="compact" v-model="calories" hide-details class="labels" value="+300"
                         @click="emitFilters">
                         <template v-slot:label>
                             <span class="lol">+300</span>
@@ -236,7 +236,7 @@ export default {
             categories: [],
             cuisines: [],
             calories: [],
-            diet: [],
+            diets: [],
             time: [],
             liked: false,
             saved:false
@@ -248,7 +248,7 @@ export default {
             this.rating = 0;
             this.categories = [];
             this.cuisines = [];
-            this.diet = [];
+            this.diets = [];
             this.calories = [];
             this.time = [];
             this.liked = false;
@@ -269,11 +269,11 @@ export default {
                     categories: this.categories,
                     cuisines: this.cuisines,
                     calories: this.calories,
-                    diet: this.deit,
+                    diets: this.diets,
                     time: this.time,
                     liked: this.liked,
                     saved: this.saved,
-                });
+                },'','');
             }, 0);
         },
     },

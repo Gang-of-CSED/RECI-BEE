@@ -32,7 +32,7 @@ const user = ref(null);
 
 
 const filterRecipes = (selected,searchWord, searchLogic) => {
- 
+    
   if (searchWord && searchLogic) {
 
       const searchWords = searchWord.toLowerCase().split(/,|\s+/).filter(Boolean); // Split by comma or space and remove empty strings
@@ -41,9 +41,12 @@ const filterRecipes = (selected,searchWord, searchLogic) => {
         if (searchLogic === 'name') {
           return recipe.name.toLowerCase().includes(searchWord.toLowerCase());
         } else if (searchLogic === 'ingredients') {
-          const recipeIngredients = recipe.ingredients.toLowerCase().split(/,|\s+/).map(ingredient => ingredient.trim());
-                return searchWords.every(searchIngredient =>
-            recipeIngredients.includes(searchIngredient)
+          const recipeIngredients = recipe.ingredients.toLowerCase().replace(/<\/?p>/g, '').split(/,|\s+/).map(ingredient => ingredient.trim());
+
+            return searchWords.every(searchIngredient =>
+                recipeIngredients.some(recipeIngredient => 
+                    recipeIngredient.includes(searchIngredient)
+          )
           );
         }
 
@@ -73,14 +76,19 @@ const filterRecipes = (selected,searchWord, searchLogic) => {
     const selectedCaloriesRanges = selected.calories && selected.calories.length > 0 ? selected.calories.map(t => calorieToRange(t)) : null;
 
     fltRecipes.value = fltRecipes.value.filter(recipe => {
+   
 
       const categoryMatch = selected.categories && selected.categories.length > 0
         ? recipe.categories.some(category => selected.categories.includes(category))
         : true;
-
-      const cuisineMatch = selected.cuisines && selected.categories.length > 0
-        ? recipe.categories.some(cuisine => selected.Cuisines.includes(cuisine))
+        const dietMatch = selected.diets && selected.diets.length > 0
+        ? recipe.diet.some(diet => selected.diets.includes(diet))
         : true;
+        
+        const cuisineMatch = selected.cuisines && selected.cuisines.length > 0
+        ? selected.cuisines.includes(recipe.cuisine)
+        : true; 
+
 
       const timeMatch = selectedTimeRanges
         ? selectedTimeRanges.some(([min, max]) => recipe.time >= min && recipe.time <= max)
@@ -98,7 +106,7 @@ const filterRecipes = (selected,searchWord, searchLogic) => {
 
       const ratingMatch = selected.rating === 0 || parseInt(recipe.rate) == parseInt(selected.rating);
 
-      return categoryMatch && timeMatch && isLiked && ratingMatch&& isSaved && calorieMatch && cuisineMatch;
+      return categoryMatch && timeMatch && isLiked && ratingMatch&& isSaved && calorieMatch && cuisineMatch && dietMatch;
     });
   }
 

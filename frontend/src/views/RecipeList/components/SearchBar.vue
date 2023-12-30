@@ -115,10 +115,11 @@
 
   }
   .barElement{
-   
+    margin: top 10px; ;
+   padding-top: 10px;
   }
   .searchBar{
-    background: #FBF7EB;
+    background: #f6f2e6;
     margin-top: 2vh;
     margin-left: 4.5vw;
     border:1px solid rgb(110, 39, 39);
