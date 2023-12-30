@@ -2,9 +2,15 @@
     <div class="recipeShortInfo">
         <div class="recipe-name">
             <h1 v-html="recipe.name"></h1>
+            <div>
+            <v-icon size="42" color="#312525" id="bookmark" @click="toggleSave">
+                {{ isSave ? 'mdi-bookmark' : 'mdi-bookmark-outline' }}
+            </v-icon>
             <v-icon size="42" color="#E35733" id="heart" @click="toggleFavorite">
                 {{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}
             </v-icon>
+                
+            </div>
         </div>
     <p v-html="recipe.description"></p>
     <div class="category-time">
@@ -35,6 +41,7 @@ export default {
         return{
             isFavorite: false,
             user: null,
+            isSave:false,
         }
     },
     mounted(){
@@ -58,6 +65,14 @@ export default {
                     // convert to boolean
                     this.isFavorite = data === 'true';
                 })
+
+                fetch(`http://localhost:8080/${username}/save/${recipeId}`)
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    // convert to boolean
+                    this.isSave = data === 'true';
+                })
             })
         }
     },
@@ -74,7 +89,21 @@ export default {
               .catch(error => {
                 console.error('There was an error!', error);
               });
+        },
+        toggleSave(){
+            console.log("toggleSave")
+            this.isSave =!this.isSave
+            let saveState = this.isSave ? 'save' : 'unsave';
+            let recipeId = this.$route.params.id;
+            axios.put('http://localhost:8080/'+this.user.username+'/'+saveState+'/'+recipeId)
+              .then(response => {
+                console.log(response.data);
+              })
+              .catch(error => {
+                console.error('There was an error!', error);
+              });
         }
+        
     }
 }
 </script>

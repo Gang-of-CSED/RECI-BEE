@@ -1,10 +1,10 @@
 <template>
     <div class="LandingPage">
-        <NavBar class="Nav"/>
-    <div class="wrapper">
-        <LandingPageDetails/>
-    </div>
-        <Footer/>
+        <NavBar class="Nav" />
+        <div class="wrapper">
+            <LandingPageDetails />
+        </div>
+        <Footer />
     </div>
 </template>
 
@@ -17,12 +17,12 @@ import Footer from '../../components/Footer.vue';
 
 <style scoped>
 .wrapper {
-  display: flex;
+    display: flex;
 }
-.Nav{
+
+.Nav {
     position: fixed;
     width: 100%;
     z-index: 10;
 }
-
 </style>

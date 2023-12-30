@@ -68,6 +68,19 @@ export default {
         }
 
     },
+    toggleSave(card) {
+      const index = this.recipiesArray.indexOf(card);
+    
+      this.recipiesArray[index].isSave=!this.recipiesArray[index].isSave;
+      console.log(this.recipiesArray)
+    
+      if(this.recipiesArray[index].isSave){
+        this.sendStateToBack(this.user.username,'save',index);
+      }
+      else{
+        this.sendStateToBack(this.user.username,'unsave',index);
+      }
+    },
     sendStateToBack(userId,favoriteState,recipeId){
       // console.log('http://localhost:8080/'+userId+'/'+favoriteState+'/'+recipeId);
       axios.put('http://localhost:8080/'+userId+'/'+favoriteState+'/'+recipeId)
