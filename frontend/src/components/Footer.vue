@@ -3,15 +3,15 @@
         <div><h1>RECI-BEE</h1></div>
         <div class="ll"></div>
         <ul class="info">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="/home">About Us</a></li>
+            <li><a href="/home">Features</a></li>
+            <li><a href="/home">FAQ</a></li>
+            <!-- <li><a href="#">Contact Us</a></li>
             <li class="socialMedia">
                 <img class="Img" :src="imageSrcX" alt="X" />
                 <img class="Img" :src="imageSrcF" alt="Facebook" />
                 <img class="Img" :src="imageSrcI" alt="instagram" />
-            </li>
+            </li> -->
         </ul>
     </div>
 </template>
